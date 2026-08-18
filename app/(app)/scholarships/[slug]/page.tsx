@@ -83,7 +83,7 @@ export default async function ScholarshipDetailPage({ params, searchParams }: Pa
   const applyUrl = scholarship.applicationUrl ?? scholarship.officialUrl;
 
   return (
-    <div className="mx-auto max-w-[840px] pb-96 sm:pb-0">
+    <div className="mx-auto max-w-[840px] pb-[calc(88px_+_env(safe-area-inset-bottom))] md:pb-0">
       <div className="mb-16">
         <BackToResultsButton from={returnTo} />
       </div>
@@ -203,7 +203,7 @@ export default async function ScholarshipDetailPage({ params, searchParams }: Pa
               applications.
             </p>
           )}
-          <div className="mt-16 hidden sm:block">
+          <div className="mt-16 hidden md:block">
             <ButtonLink
               href={applyUrl}
               target="_blank"
@@ -217,19 +217,27 @@ export default async function ScholarshipDetailPage({ params, searchParams }: Pa
         </Card>
       </div>
 
-      {/* Sticky mobile apply bar, positioned above the app rail's mobile
-          bottom tab bar rather than on top of it, so both stay usable. */}
-      <div className="fixed inset-x-0 bottom-64 z-40 border-t border-border bg-surface-white p-16 sm:hidden">
-        <ButtonLink
-          href={applyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          size="lg"
-          variant={isClosed ? 'secondary' : 'primary'}
-          className="w-full"
+      {/* Sticky mobile apply bar: pinned flush to the bottom of the
+          viewport (there's no bottom nav bar to clear anymore), dvh/safe-
+          area aware so it never sits behind the home indicator or browser
+          chrome. The page's own bottom padding above reserves exactly this
+          bar's height so scrolled content never ends up hidden behind it. */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-white p-16 shadow-lg md:hidden">
+        <div
+          className="mx-auto max-w-[840px]"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
-          {isClosed ? 'Visit official site' : 'Apply on official site'}
-        </ButtonLink>
+          <ButtonLink
+            href={applyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="lg"
+            variant={isClosed ? 'secondary' : 'primary'}
+            className="w-full"
+          >
+            {isClosed ? 'Visit official site' : 'Apply on official site'}
+          </ButtonLink>
+        </div>
       </div>
     </div>
   );
