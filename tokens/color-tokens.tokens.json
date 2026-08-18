@@ -1,0 +1,622 @@
+{
+  "color": {
+    "primary": {
+      "ink indigo": {
+        "description": "Primary brand color. Trust & authority. Use for major headings, navigation, strong text, and surfaces.",
+        "type": "color",
+        "value": "#1b1b3aff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:0950631dc99effd7e6f29062008bf7da29c3dede,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "ink indigo light": {
+        "description": "Lighter variant of Ink Indigo for hover states and secondary surfaces.",
+        "type": "color",
+        "value": "#2e2e54ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:27ca62dd01a1a37ff4910f658df454e7df7cb9a4,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "ink indigo dark": {
+        "description": "Darker variant of Ink Indigo for pressed states and deep backgrounds.",
+        "type": "color",
+        "value": "#121228ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:f655bbf43774bef6deb4e147f8b01d187c9102d9,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "accent": {
+      "marigold": {
+        "description": "Accent color. Opportunity & warmth. Use intentionally for accent and opportunity moments.",
+        "type": "color",
+        "value": "#f6b23cff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:7f20f4acc296584504c5d02cc5797e620b599e13,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "marigold light": {
+        "description": "Lighter variant of Marigold for subtle highlights and hover states.",
+        "type": "color",
+        "value": "#f9cc73ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:5c10c87ee1751900629fff72ec27ab859cdc925f,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "marigold dark": {
+        "description": "Darker variant of Marigold for pressed states and text on light backgrounds.",
+        "type": "color",
+        "value": "#d4922aff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:14bda2f65dd0233f281d9ff869a0ac2017bb94f8,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "surface": {
+      "warm off-white": {
+        "description": "Default reading surface. Warm neutral to avoid sterile pure-white UI. Use as primary background.",
+        "type": "color",
+        "value": "#faf7f2ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:49bb6e01473b46182277636796a56ba1097adb69,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "white": {
+        "description": "Pure white for cards and elevated surfaces.",
+        "type": "color",
+        "value": "#ffffffff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:1d0767db0777a05c6cded892fff87158e002ce2d,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "warm light": {
+        "description": "Slightly deeper warm surface for section banding and content separation.",
+        "type": "color",
+        "value": "#f3ede4ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:c5f5f9a3e0b98d8209cd141c5b610e3e7fc921a1,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "description": "Primary text color. Same as Ink Indigo for headings and body text.",
+        "type": "color",
+        "value": "#1b1b3aff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:d6ce444bc2c81308f3a8fd10db38726f15ea7e28,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "secondary": {
+        "description": "Secondary text for supporting copy, captions, and muted content.",
+        "type": "color",
+        "value": "#6b7085ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:ecda002a2c549eb84d9efb1fba870b40faf1d883,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "tertiary": {
+        "description": "Tertiary text for placeholders, disabled states, and subtle labels.",
+        "type": "color",
+        "value": "#9ca0b0ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:5123e646214cdc8585da769da1ca34d25423f2cc,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "inverse": {
+        "description": "Text on dark/primary backgrounds.",
+        "type": "color",
+        "value": "#ffffffff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:a6bd9babc24b87a5adfdb0b8df58fae444276a22,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "description": "Default border color for cards, inputs, and dividers.",
+        "type": "color",
+        "value": "#d8dae5ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:9c8e0bdf75d071823ee9e339190b3652dde7693e,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "strong": {
+        "description": "Stronger border for emphasis and active states.",
+        "type": "color",
+        "value": "#9ca0b0ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:ce34f0731a29c165ec4b61ec053ca99d15cb7895,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "subtle": {
+        "description": "Subtle border for light separators and background divisions.",
+        "type": "color",
+        "value": "#e8e9f0ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:a2ce827235381ef22b24bbf936ae4aa1994b3b75,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "neutral": {
+      "soft slate": {
+        "description": "Supporting text, borders, and muted UI. Secondary information neutral.",
+        "type": "color",
+        "value": "#6b7085ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:b84dfdeb6714007071c83977f35ed7f31c79892b,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "soft slate light": {
+        "description": "Lighter neutral for placeholders and disabled elements.",
+        "type": "color",
+        "value": "#9ca0b0ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:38e79b4332c69b47b33054448b7d1263fd4ad0ca,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "soft slate dark": {
+        "description": "Darker neutral for stronger secondary content.",
+        "type": "color",
+        "value": "#4a4e63ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:a30a9cbe29f4117d97fabf68e1fa9de09eb8e65e,",
+            "exportKey": "color"
+          }
+        }
+      }
+    },
+    "semantic": {
+      "success": {
+        "description": "Eligibility green. Use for 'Eligible for you' and other positive semantic states.",
+        "type": "color",
+        "value": "#30a46cff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:5b21e529bf4345aec7a71b2f6a7aa8512f987ba1,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "success light": {
+        "description": "Light green background for success states and eligible badges.",
+        "type": "color",
+        "value": "#ddf3e4ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:9a03e7ebce361b0587a58379db3a37de3686ab93,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "warning": {
+        "description": "Warning state for alerts and attention-needed items.",
+        "type": "color",
+        "value": "#f5a623ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:3334d5241f749a45810d3748221558af1c20cc01,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "warning light": {
+        "description": "Light warning background for notice banners.",
+        "type": "color",
+        "value": "#fef3cdff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:5efee6190390800b9f78891e302806a9356f0ecc,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "error": {
+        "description": "Reserved Red. Deadline urgency. Closing-soon/closed and critical deadline states only.",
+        "type": "color",
+        "value": "#e5484dff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:da1552b6810c833822b76fb02c6b19706dd61bea,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "error light": {
+        "description": "Light error background for urgent deadline badges and alerts.",
+        "type": "color",
+        "value": "#ffeef0ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:fcbd49ccee1f5aab5c864c7d0fceca155b077bfa,",
+            "exportKey": "color"
+          }
+        }
+      }
+    }
+  },
+  "gradient": {
+    "gradient": {
+      "warm surface": {
+        "description": "Calm warm gradient for page backgrounds. Soft off-white to slightly warmer tone.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#faf7f2ff"
+            },
+            {
+              "position": 1,
+              "color": "#f3ede4ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:ed4f4afe866a91e443fb110a27dc13228727664d,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "warm surface horizontal": {
+        "description": "Horizontal warm surface gradient. Gentle left-to-right warmth.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 90,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#ffffffff"
+            },
+            {
+              "position": 1,
+              "color": "#faf7f2ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:ce3dab4df64088d81971eae1046b33097dcb4caf,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "indigo subtle": {
+        "description": "Soft indigo gradient for hero sections and feature highlights. Calm and authoritative.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#1b1b3aff"
+            },
+            {
+              "position": 1,
+              "color": "#2e2e54ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:529005c5e2d22ba5a08919fc5946d3ac1fc3659a,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "indigo to warm": {
+        "description": "Indigo fading to warm off-white. Clean transition for hero-to-content sections.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#1b1b3aff"
+            },
+            {
+              "position": 0.6,
+              "color": "#2e2e54ff"
+            },
+            {
+              "position": 1,
+              "color": "#faf7f2ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:ab07de028d346f529e46326710807daf45c7d91d,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "marigold soft": {
+        "description": "Gentle marigold gradient for accent cards and CTA highlights. Warm and inviting.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#f6b23cff"
+            },
+            {
+              "position": 1,
+              "color": "#f9cc73ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:47c93245ae2771d8de6340af109bad682f18f1c3,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "marigold to white": {
+        "description": "Marigold fading to white. Subtle warmth for featured scholarship cards.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#f6b23c26"
+            },
+            {
+              "position": 1,
+              "color": "#f6b23c00"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:e4730139924b478c904922a25dd52775cde715ce,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "dark overlay": {
+        "description": "Soft dark overlay for text legibility on images. Clean fade-to-dark.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#1b1b3a00"
+            },
+            {
+              "position": 0.5,
+              "color": "#1b1b3a4d"
+            },
+            {
+              "position": 1,
+              "color": "#1b1b3ab3"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:eabac71f0a5b7a4cd5347a31abf91cc907b581a9,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "light overlay": {
+        "description": "Soft light overlay for subtle depth on warm backgrounds.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#ffffff99"
+            },
+            {
+              "position": 1,
+              "color": "#ffffff00"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:5556564aad5361c2644cbb4296df6d94db9ad380,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "glass surface": {
+        "description": "Translucent glass gradient for floating panels and modals. Clean and airy.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#ffffffcc"
+            },
+            {
+              "position": 1,
+              "color": "#faf7f299"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:2324adba8f9ff27c94f5a63e5cb9c482b4969ad7,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "brand blend": {
+        "description": "Gentle indigo-to-marigold diagonal. Use sparingly for key brand moments.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 135,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#1b1b3aff"
+            },
+            {
+              "position": 0.7,
+              "color": "#2e2e54ff"
+            },
+            {
+              "position": 1,
+              "color": "#f6b23cd9"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:dc12414834e568a99cba7141f204f60139ada572,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "slate subtle": {
+        "description": "Very soft neutral gradient for muted sections and secondary backgrounds.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#f3ede4ff"
+            },
+            {
+              "position": 1,
+              "color": "#e8e9f0ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:c4f7854a084fd362e39bdd7b00589b8cd4c2be54,",
+            "exportKey": "gradient"
+          }
+        }
+      },
+      "fade to transparent": {
+        "description": "Content fade-out for scrollable areas and overflow masks.",
+        "type": "custom-gradient",
+        "value": {
+          "gradientType": "linear",
+          "rotation": 180,
+          "stops": [
+            {
+              "position": 0,
+              "color": "#faf7f200"
+            },
+            {
+              "position": 1,
+              "color": "#faf7f2ff"
+            }
+          ]
+        },
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:82e913d6696c8f1a348870b5e744638ef181c5db,",
+            "exportKey": "gradient"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         Role     @default(STUDENT)
+
+  // optional eligibility profile
+  nationality  String?
+  studyLevel   StudyLevel? @map("study_level")
+  fieldOfStudy String?     @map("field_of_study")
+  targetRegion String?     @map("target_region")
+  onboardedAt  DateTime?   @map("onboarded_at")
+
+  saved        SavedScholarship[]
+  sessions     Session[]
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Scholarship {
+  id                    String       @id @default(cuid())
+  title                 String
+  slug                  String       @unique
+  provider              String
+  logoUrl               String?      @map("logo_url")
+  officialUrl           String       @map("official_url")
+  applicationUrl        String?      @map("application_url")
+
+  fundingLevel          FundingLevel @map("funding_level")
+  studyLevels           StudyLevel[] @map("study_levels")
+  fieldsOfStudy         String[]     @map("fields_of_study")
+  hostCountry           String       @map("host_country")
+  region                String
+  eligibleNationalities String[]     @map("eligible_nationalities")
+  openToAllAfrican      Boolean      @default(false) @map("open_to_all_african")
+
+  benefits             String
+  eligibility          String
+  requirements         String
+
+  opensAt              DateTime?    @map("opens_at")
+  deadlineAt            DateTime?    @map("deadline_at")
+  status                ScholarshipStatus @default(DRAFT)
+  source                String
+  verifiedAt            DateTime?    @map("verified_at")
+
+  saved                 SavedScholarship[]
+  createdAt             DateTime     @default(now()) @map("created_at")
+  updatedAt             DateTime     @updatedAt @map("updated_at")
+
+  @@index([status, deadlineAt])
+  @@index([region])
+  @@index([hostCountry])
+  @@map("scholarships")
+}
+
+model SavedScholarship {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  scholarshipId String   @map("scholarship_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scholarshipId])
+  @@map("saved_scholarships")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum StudyLevel {
+  UNDERGRADUATE
+  MASTERS
+  PHD
+  RESEARCH
+}
+
+enum FundingLevel {
+  FULL
+  PARTIAL
+  TUITION_ONLY
+  STIPEND
+}
+
+enum ScholarshipStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+  ARCHIVED
+}

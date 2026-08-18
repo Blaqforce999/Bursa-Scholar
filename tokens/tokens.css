@@ -1,0 +1,839 @@
+/**
+ * Bursa Scholar Design Tokens
+ * 
+ * Auto-generated from Figma Design Tokens JSON files.
+ * Source Files:
+ *  - color-tokens.tokens.json
+ *  - spacing-border-token.json
+ *  - typography-tokens.tokens.json
+ * 
+ * DO NOT EDIT THIS CSS FILE DIRECTLY.
+ * Run `node build-tokens.js` to regenerate.
+ */
+
+:root {
+   /* ==========================================================================
+     Color Tokens (25 variables)
+     ========================================================================== */
+   /* Primary brand color. Trust & authority. Use for major headings, navigation, strong text, and surfaces. */
+   --color-primary-ink-indigo: #1b1b3aff;
+
+   /* Lighter variant of Ink Indigo for hover states and secondary surfaces. */
+   --color-primary-ink-indigo-light: #2e2e54ff;
+
+   /* Darker variant of Ink Indigo for pressed states and deep backgrounds. */
+   --color-primary-ink-indigo-dark: #121228ff;
+
+   /* Accent color. Opportunity & warmth. Use intentionally for accent and opportunity moments. */
+   --color-accent-marigold: #f6b23cff;
+
+   /* Lighter variant of Marigold for subtle highlights and hover states. */
+   --color-accent-marigold-light: #f9cc73ff;
+
+   /* Darker variant of Marigold for pressed states and text on light backgrounds. */
+   --color-accent-marigold-dark: #d4922aff;
+
+   /* Default reading surface. Warm neutral to avoid sterile pure-white UI. Use as primary background. */
+   --color-surface-warm-off-white: #faf7f2ff;
+
+   /* Pure white for cards and elevated surfaces. */
+   --color-surface-white: #ffffffff;
+
+   /* Slightly deeper warm surface for section banding and content separation. */
+   --color-surface-warm-light: #f3ede4ff;
+
+   /* Primary text color. Same as Ink Indigo for headings and body text. */
+   --color-text-primary: #1b1b3aff;
+
+   /* Secondary text for supporting copy, captions, and muted content. */
+   --color-text-secondary: #6b7085ff;
+
+   /* Tertiary text for placeholders, disabled states, and subtle labels. */
+   --color-text-tertiary: #9ca0b0ff;
+
+   /* Text on dark/primary backgrounds. */
+   --color-text-inverse: #ffffffff;
+
+   /* Default border color for cards, inputs, and dividers. */
+   --color-border-default: #d8dae5ff;
+
+   /* Stronger border for emphasis and active states. */
+   --color-border-strong: #9ca0b0ff;
+
+   /* Subtle border for light separators and background divisions. */
+   --color-border-subtle: #e8e9f0ff;
+
+   /* Supporting text, borders, and muted UI. Secondary information neutral. */
+   --color-neutral-soft-slate: #6b7085ff;
+
+   /* Lighter neutral for placeholders and disabled elements. */
+   --color-neutral-soft-slate-light: #9ca0b0ff;
+
+   /* Darker neutral for stronger secondary content. */
+   --color-neutral-soft-slate-dark: #4a4e63ff;
+
+   /* Eligibility green. Use for 'Eligible for you' and other positive semantic states. */
+   --color-semantic-success: #30a46cff;
+
+   /* Light green background for success states and eligible badges. */
+   --color-semantic-success-light: #ddf3e4ff;
+
+   /* Warning state for alerts and attention-needed items. */
+   --color-semantic-warning: #f5a623ff;
+
+   /* Light warning background for notice banners. */
+   --color-semantic-warning-light: #fef3cdff;
+
+   /* Reserved Red. Deadline urgency. Closing-soon/closed and critical deadline states only. */
+   --color-semantic-error: #e5484dff;
+
+   /* Light error background for urgent deadline badges and alerts. */
+   --color-semantic-error-light: #ffeef0ff;
+
+   /* ==========================================================================
+     Gradient Tokens (12 variables)
+     ========================================================================== */
+   /* Calm warm gradient for page backgrounds. Soft off-white to slightly warmer tone. */
+   --gradient-warm-surface: linear-gradient(180deg, #faf7f2ff 0%, #f3ede4ff 100%);
+
+   /* Horizontal warm surface gradient. Gentle left-to-right warmth. */
+   --gradient-warm-surface-horizontal: linear-gradient(90deg, #ffffffff 0%, #faf7f2ff 100%);
+
+   /* Soft indigo gradient for hero sections and feature highlights. Calm and authoritative. */
+   --gradient-indigo-subtle: linear-gradient(180deg, #1b1b3aff 0%, #2e2e54ff 100%);
+
+   /* Indigo fading to warm off-white. Clean transition for hero-to-content sections. */
+   --gradient-indigo-to-warm: linear-gradient(180deg, #1b1b3aff 0%, #2e2e54ff 60%, #faf7f2ff 100%);
+
+   /* Gentle marigold gradient for accent cards and CTA highlights. Warm and inviting. */
+   --gradient-marigold-soft: linear-gradient(180deg, #f6b23cff 0%, #f9cc73ff 100%);
+
+   /* Marigold fading to white. Subtle warmth for featured scholarship cards. */
+   --gradient-marigold-to-white: linear-gradient(180deg, #f6b23c26 0%, #f6b23c00 100%);
+
+   /* Soft dark overlay for text legibility on images. Clean fade-to-dark. */
+   --gradient-dark-overlay: linear-gradient(180deg, #1b1b3a00 0%, #1b1b3a4d 50%, #1b1b3ab3 100%);
+
+   /* Soft light overlay for subtle depth on warm backgrounds. */
+   --gradient-light-overlay: linear-gradient(180deg, #ffffff99 0%, #ffffff00 100%);
+
+   /* Translucent glass gradient for floating panels and modals. Clean and airy. */
+   --gradient-glass-surface: linear-gradient(180deg, #ffffffcc 0%, #faf7f299 100%);
+
+   /* Gentle indigo-to-marigold diagonal. Use sparingly for key brand moments. */
+   --gradient-brand-blend: linear-gradient(135deg, #1b1b3aff 0%, #2e2e54ff 70%, #f6b23cd9 100%);
+
+   /* Very soft neutral gradient for muted sections and secondary backgrounds. */
+   --gradient-slate-subtle: linear-gradient(180deg, #f3ede4ff 0%, #e8e9f0ff 100%);
+
+   /* Content fade-out for scrollable areas and overflow masks. */
+   --gradient-fade-to-transparent: linear-gradient(180deg, #faf7f200 0%, #faf7f2ff 100%);
+
+   /* ==========================================================================
+     Spacing Tokens (44 variables)
+     ========================================================================== */
+   --spacing-0: 0;
+
+   --spacing-1: 1px;
+
+   --spacing-2: 2px;
+
+   --spacing-4: 4px;
+
+   --spacing-6: 6px;
+
+   --spacing-8: 8px;
+
+   --spacing-10: 10px;
+
+   --spacing-12: 12px;
+
+   --spacing-14: 14px;
+
+   --spacing-16: 16px;
+
+   --spacing-18: 18px;
+
+   --spacing-20: 20px;
+
+   --spacing-24: 24px;
+
+   --spacing-28: 28px;
+
+   --spacing-32: 32px;
+
+   --spacing-36: 36px;
+
+   --spacing-40: 40px;
+
+   --spacing-44: 44px;
+
+   --spacing-48: 48px;
+
+   --spacing-52: 52px;
+
+   --spacing-56: 56px;
+
+   --spacing-60: 60px;
+
+   --spacing-64: 64px;
+
+   --spacing-72: 72px;
+
+   --spacing-80: 80px;
+
+   --spacing-88: 88px;
+
+   --spacing-96: 96px;
+
+   --spacing-104: 104px;
+
+   --spacing-112: 112px;
+
+   --spacing-120: 120px;
+
+   --spacing-128: 128px;
+
+   --spacing-144: 144px;
+
+   --spacing-160: 160px;
+
+   --spacing-176: 176px;
+
+   --spacing-192: 192px;
+
+   --spacing-208: 208px;
+
+   --spacing-224: 224px;
+
+   --spacing-240: 240px;
+
+   --spacing-256: 256px;
+
+   --spacing-288: 288px;
+
+   --spacing-320: 320px;
+
+   --spacing-384: 384px;
+
+   --spacing-448: 448px;
+
+   --spacing-512: 512px;
+
+   /* ==========================================================================
+     Border Tokens (8 variables)
+     ========================================================================== */
+   --border-none: 0;
+
+   --border-xs: 0.5px;
+
+   --border-sm: 0.7px;
+
+   --border-md: 1px;
+
+   --border-lg: 1.5px;
+
+   --border-xl: 2px;
+
+   --border-2xl: 3px;
+
+   --border-3xl: 4px;
+
+   /* ==========================================================================
+     Typography & Font Tokens (289 variables)
+     ========================================================================== */
+   /* Typography Style: font > caption - Captions, timestamps, metadata, and fine print. */
+   --font-caption-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-caption-font-size: 12px;
+
+   --font-caption-font-weight: 500;
+
+   --font-caption-line-height: 16px;
+
+   --font-caption-letter-spacing: 0;
+
+   --font-caption: 500 12px/16px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > display > hero - Wordmark, hero headlines, and major editorial moments. Intended for Clash Display — swap font family when available. */
+   --font-display-hero-font-family: 'Clash Display', sans-serif;
+
+   --font-display-hero-font-size: 64px;
+
+   --font-display-hero-font-weight: 700;
+
+   --font-display-hero-line-height: 72px;
+
+   --font-display-hero-letter-spacing: -1.28px;
+
+   --font-display-hero: 700 64px/72px 'Clash Display', sans-serif;
+
+   /* Typography Style: font > display > large - Large display for major hero headlines and key landing moments. */
+   --font-display-large-font-family: 'Clash Display', sans-serif;
+
+   --font-display-large-font-size: 56px;
+
+   --font-display-large-font-weight: 700;
+
+   --font-display-large-line-height: 64px;
+
+   --font-display-large-letter-spacing: -1.12px;
+
+   --font-display-large: 700 56px/64px 'Clash Display', sans-serif;
+
+   /* Typography Style: font > display > medium - Medium display for section heroes and prominent editorial headings. */
+   --font-display-medium-font-family: 'Clash Display', sans-serif;
+
+   --font-display-medium-font-size: 48px;
+
+   --font-display-medium-font-weight: 700;
+
+   --font-display-medium-line-height: 56px;
+
+   --font-display-medium-letter-spacing: -0.72px;
+
+   --font-display-medium: 700 48px/56px 'Clash Display', sans-serif;
+
+   /* Typography Style: font > display > small - Small display for card heroes, feature callouts, and compact display moments. */
+   --font-display-small-font-family: 'Clash Display', sans-serif;
+
+   --font-display-small-font-size: 40px;
+
+   --font-display-small-font-weight: 700;
+
+   --font-display-small-line-height: 48px;
+
+   --font-display-small-letter-spacing: -0.4px;
+
+   --font-display-small: 700 40px/48px 'Clash Display', sans-serif;
+
+   /* Typography Style: font > display > xsmall - Extra-small display for subtle editorial moments and highlighted labels. */
+   --font-display-xsmall-font-family: 'Clash Display', sans-serif;
+
+   --font-display-xsmall-font-size: 32px;
+
+   --font-display-xsmall-font-weight: 700;
+
+   --font-display-xsmall-line-height: 40px;
+
+   --font-display-xsmall-letter-spacing: -0.16px;
+
+   --font-display-xsmall: 700 32px/40px 'Clash Display', sans-serif;
+
+   /* Typography Style: font > heading > h1 - Primary page headings and section titles. Brand personality font. */
+   --font-heading-h1-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-heading-h1-font-size: 48px;
+
+   --font-heading-h1-font-weight: 700;
+
+   --font-heading-h1-line-height: 56px;
+
+   --font-heading-h1-letter-spacing: -1.2px;
+
+   --font-heading-h1: 700 48px/56px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > heading > h2 - Secondary headings and major subsections. */
+   --font-heading-h2-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-heading-h2-font-size: 36px;
+
+   --font-heading-h2-font-weight: 700;
+
+   --font-heading-h2-line-height: 44px;
+
+   --font-heading-h2-letter-spacing: -0.72px;
+
+   --font-heading-h2: 700 36px/44px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > heading > h3 - Card titles and tertiary headings. */
+   --font-heading-h3-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-heading-h3-font-size: 28px;
+
+   --font-heading-h3-font-weight: 600;
+
+   --font-heading-h3-line-height: 36px;
+
+   --font-heading-h3-letter-spacing: -0.42px;
+
+   --font-heading-h3: 600 28px/36px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > heading > h4 - Small headings, widget titles, and list group headers. */
+   --font-heading-h4-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-heading-h4-font-size: 22px;
+
+   --font-heading-h4-font-weight: 600;
+
+   --font-heading-h4-line-height: 30px;
+
+   --font-heading-h4-letter-spacing: -0.22px;
+
+   --font-heading-h4: 600 22px/30px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > body > large - Lead paragraphs, introductory text, and prominent body copy. */
+   --font-body-large-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-body-large-font-size: 18px;
+
+   --font-body-large-font-weight: 400;
+
+   --font-body-large-line-height: 28px;
+
+   --font-body-large-letter-spacing: -0.09px;
+
+   --font-body-large: 400 18px/28px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > body > regular - Default body text for general UI content, descriptions, and paragraphs. */
+   --font-body-regular-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-body-regular-font-size: 16px;
+
+   --font-body-regular-font-weight: 400;
+
+   --font-body-regular-line-height: 24px;
+
+   --font-body-regular-letter-spacing: -0.048px;
+
+   --font-body-regular: 400 16px/24px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > body > small - Secondary body text, helper text, and compact content areas. */
+   --font-body-small-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-body-small-font-size: 14px;
+
+   --font-body-small-font-weight: 400;
+
+   --font-body-small-line-height: 20px;
+
+   --font-body-small-letter-spacing: -0.028px;
+
+   --font-body-small: 400 14px/20px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > button > label - Buttons, navigation items, labels, filters, and form labels. */
+   --font-button-label-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --font-button-label-font-size: 14px;
+
+   --font-button-label-font-weight: 600;
+
+   --font-button-label-line-height: 20px;
+
+   --font-button-label-letter-spacing: -0.07px;
+
+   --font-button-label: 600 14px/20px 'Plus Jakarta Sans', sans-serif;
+
+   /* Typography Style: font > data > large - Large data figures, funding amounts, and prominent numeric values. Uses Geist Mono. */
+   --font-data-large-font-family: 'Geist Mono', monospace;
+
+   --font-data-large-font-size: 24px;
+
+   --font-data-large-font-weight: 600;
+
+   --font-data-large-line-height: 32px;
+
+   --font-data-large-letter-spacing: -0.24px;
+
+   --font-data-large: 600 24px/32px 'Geist Mono', monospace;
+
+   /* Typography Style: font > data > regular - Deadlines, dates, comparison values, and standard numeric content. Uses Geist Mono. */
+   --font-data-regular-font-family: 'Geist Mono', monospace;
+
+   --font-data-regular-font-size: 14px;
+
+   --font-data-regular-font-weight: 500;
+
+   --font-data-regular-line-height: 20px;
+
+   --font-data-regular-letter-spacing: -0.042px;
+
+   --font-data-regular: 500 14px/20px 'Geist Mono', monospace;
+
+   /* Typography Style: font > data > small - Small numeric labels, table cell data, and compact data-heavy UI. Uses Geist Mono. */
+   --font-data-small-font-family: 'Geist Mono', monospace;
+
+   --font-data-small-font-size: 12px;
+
+   --font-data-small-font-weight: 400;
+
+   --font-data-small-line-height: 16px;
+
+   --font-data-small-letter-spacing: 0;
+
+   --font-data-small: 400 12px/16px 'Geist Mono', monospace;
+
+   --typography-caption-font-size: 12px;
+
+   --typography-caption-text-decoration: none;
+
+   --typography-caption-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-caption-font-weight: 500;
+
+   --typography-caption-font-style: normal;
+
+   --typography-caption-font-stretch: normal;
+
+   --typography-caption-letter-spacing: 0;
+
+   --typography-caption-line-height: 16px;
+
+   --typography-caption-paragraph-indent: 0;
+
+   --typography-caption-paragraph-spacing: 0;
+
+   --typography-caption-text-case: none;
+
+   --typography-display-hero-font-size: 64px;
+
+   --typography-display-hero-text-decoration: none;
+
+   --typography-display-hero-font-family: 'Clash Display', sans-serif;
+
+   --typography-display-hero-font-weight: 700;
+
+   --typography-display-hero-font-style: normal;
+
+   --typography-display-hero-font-stretch: normal;
+
+   --typography-display-hero-letter-spacing: -1.28px;
+
+   --typography-display-hero-line-height: 72px;
+
+   --typography-display-hero-paragraph-indent: 0;
+
+   --typography-display-hero-paragraph-spacing: 0;
+
+   --typography-display-hero-text-case: none;
+
+   --typography-display-large-font-size: 56px;
+
+   --typography-display-large-text-decoration: none;
+
+   --typography-display-large-font-family: 'Clash Display', sans-serif;
+
+   --typography-display-large-font-weight: 700;
+
+   --typography-display-large-font-style: normal;
+
+   --typography-display-large-font-stretch: normal;
+
+   --typography-display-large-letter-spacing: -1.12px;
+
+   --typography-display-large-line-height: 64px;
+
+   --typography-display-large-paragraph-indent: 0;
+
+   --typography-display-large-paragraph-spacing: 0;
+
+   --typography-display-large-text-case: none;
+
+   --typography-display-medium-font-size: 48px;
+
+   --typography-display-medium-text-decoration: none;
+
+   --typography-display-medium-font-family: 'Clash Display', sans-serif;
+
+   --typography-display-medium-font-weight: 700;
+
+   --typography-display-medium-font-style: normal;
+
+   --typography-display-medium-font-stretch: normal;
+
+   --typography-display-medium-letter-spacing: -0.72px;
+
+   --typography-display-medium-line-height: 56px;
+
+   --typography-display-medium-paragraph-indent: 0;
+
+   --typography-display-medium-paragraph-spacing: 0;
+
+   --typography-display-medium-text-case: none;
+
+   --typography-display-small-font-size: 40px;
+
+   --typography-display-small-text-decoration: none;
+
+   --typography-display-small-font-family: 'Clash Display', sans-serif;
+
+   --typography-display-small-font-weight: 700;
+
+   --typography-display-small-font-style: normal;
+
+   --typography-display-small-font-stretch: normal;
+
+   --typography-display-small-letter-spacing: -0.4px;
+
+   --typography-display-small-line-height: 48px;
+
+   --typography-display-small-paragraph-indent: 0;
+
+   --typography-display-small-paragraph-spacing: 0;
+
+   --typography-display-small-text-case: none;
+
+   --typography-display-xsmall-font-size: 32px;
+
+   --typography-display-xsmall-text-decoration: none;
+
+   --typography-display-xsmall-font-family: 'Clash Display', sans-serif;
+
+   --typography-display-xsmall-font-weight: 700;
+
+   --typography-display-xsmall-font-style: normal;
+
+   --typography-display-xsmall-font-stretch: normal;
+
+   --typography-display-xsmall-letter-spacing: -0.16px;
+
+   --typography-display-xsmall-line-height: 40px;
+
+   --typography-display-xsmall-paragraph-indent: 0;
+
+   --typography-display-xsmall-paragraph-spacing: 0;
+
+   --typography-display-xsmall-text-case: none;
+
+   --typography-heading-h1-font-size: 48px;
+
+   --typography-heading-h1-text-decoration: none;
+
+   --typography-heading-h1-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-heading-h1-font-weight: 700;
+
+   --typography-heading-h1-font-style: normal;
+
+   --typography-heading-h1-font-stretch: normal;
+
+   --typography-heading-h1-letter-spacing: -1.2px;
+
+   --typography-heading-h1-line-height: 56px;
+
+   --typography-heading-h1-paragraph-indent: 0;
+
+   --typography-heading-h1-paragraph-spacing: 0;
+
+   --typography-heading-h1-text-case: none;
+
+   --typography-heading-h2-font-size: 36px;
+
+   --typography-heading-h2-text-decoration: none;
+
+   --typography-heading-h2-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-heading-h2-font-weight: 700;
+
+   --typography-heading-h2-font-style: normal;
+
+   --typography-heading-h2-font-stretch: normal;
+
+   --typography-heading-h2-letter-spacing: -0.72px;
+
+   --typography-heading-h2-line-height: 44px;
+
+   --typography-heading-h2-paragraph-indent: 0;
+
+   --typography-heading-h2-paragraph-spacing: 0;
+
+   --typography-heading-h2-text-case: none;
+
+   --typography-heading-h3-font-size: 28px;
+
+   --typography-heading-h3-text-decoration: none;
+
+   --typography-heading-h3-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-heading-h3-font-weight: 600;
+
+   --typography-heading-h3-font-style: normal;
+
+   --typography-heading-h3-font-stretch: normal;
+
+   --typography-heading-h3-letter-spacing: -0.42px;
+
+   --typography-heading-h3-line-height: 36px;
+
+   --typography-heading-h3-paragraph-indent: 0;
+
+   --typography-heading-h3-paragraph-spacing: 0;
+
+   --typography-heading-h3-text-case: none;
+
+   --typography-heading-h4-font-size: 22px;
+
+   --typography-heading-h4-text-decoration: none;
+
+   --typography-heading-h4-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-heading-h4-font-weight: 600;
+
+   --typography-heading-h4-font-style: normal;
+
+   --typography-heading-h4-font-stretch: normal;
+
+   --typography-heading-h4-letter-spacing: -0.22px;
+
+   --typography-heading-h4-line-height: 30px;
+
+   --typography-heading-h4-paragraph-indent: 0;
+
+   --typography-heading-h4-paragraph-spacing: 0;
+
+   --typography-heading-h4-text-case: none;
+
+   --typography-body-large-font-size: 18px;
+
+   --typography-body-large-text-decoration: none;
+
+   --typography-body-large-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-body-large-font-weight: 400;
+
+   --typography-body-large-font-style: normal;
+
+   --typography-body-large-font-stretch: normal;
+
+   --typography-body-large-letter-spacing: -0.09px;
+
+   --typography-body-large-line-height: 28px;
+
+   --typography-body-large-paragraph-indent: 0;
+
+   --typography-body-large-paragraph-spacing: 0;
+
+   --typography-body-large-text-case: none;
+
+   --typography-body-regular-font-size: 16px;
+
+   --typography-body-regular-text-decoration: none;
+
+   --typography-body-regular-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-body-regular-font-weight: 400;
+
+   --typography-body-regular-font-style: normal;
+
+   --typography-body-regular-font-stretch: normal;
+
+   --typography-body-regular-letter-spacing: -0.048px;
+
+   --typography-body-regular-line-height: 24px;
+
+   --typography-body-regular-paragraph-indent: 0;
+
+   --typography-body-regular-paragraph-spacing: 0;
+
+   --typography-body-regular-text-case: none;
+
+   --typography-body-small-font-size: 14px;
+
+   --typography-body-small-text-decoration: none;
+
+   --typography-body-small-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-body-small-font-weight: 400;
+
+   --typography-body-small-font-style: normal;
+
+   --typography-body-small-font-stretch: normal;
+
+   --typography-body-small-letter-spacing: -0.028px;
+
+   --typography-body-small-line-height: 20px;
+
+   --typography-body-small-paragraph-indent: 0;
+
+   --typography-body-small-paragraph-spacing: 0;
+
+   --typography-body-small-text-case: none;
+
+   --typography-button-label-font-size: 14px;
+
+   --typography-button-label-text-decoration: none;
+
+   --typography-button-label-font-family: 'Plus Jakarta Sans', sans-serif;
+
+   --typography-button-label-font-weight: 600;
+
+   --typography-button-label-font-style: normal;
+
+   --typography-button-label-font-stretch: normal;
+
+   --typography-button-label-letter-spacing: -0.07px;
+
+   --typography-button-label-line-height: 20px;
+
+   --typography-button-label-paragraph-indent: 0;
+
+   --typography-button-label-paragraph-spacing: 0;
+
+   --typography-button-label-text-case: none;
+
+   --typography-data-large-font-size: 24px;
+
+   --typography-data-large-text-decoration: none;
+
+   --typography-data-large-font-family: 'Geist Mono', monospace;
+
+   --typography-data-large-font-weight: 600;
+
+   --typography-data-large-font-style: normal;
+
+   --typography-data-large-font-stretch: normal;
+
+   --typography-data-large-letter-spacing: -0.24px;
+
+   --typography-data-large-line-height: 32px;
+
+   --typography-data-large-paragraph-indent: 0;
+
+   --typography-data-large-paragraph-spacing: 0;
+
+   --typography-data-large-text-case: none;
+
+   --typography-data-regular-font-size: 14px;
+
+   --typography-data-regular-text-decoration: none;
+
+   --typography-data-regular-font-family: 'Geist Mono', monospace;
+
+   --typography-data-regular-font-weight: 500;
+
+   --typography-data-regular-font-style: normal;
+
+   --typography-data-regular-font-stretch: normal;
+
+   --typography-data-regular-letter-spacing: -0.042px;
+
+   --typography-data-regular-line-height: 20px;
+
+   --typography-data-regular-paragraph-indent: 0;
+
+   --typography-data-regular-paragraph-spacing: 0;
+
+   --typography-data-regular-text-case: none;
+
+   --typography-data-small-font-size: 12px;
+
+   --typography-data-small-text-decoration: none;
+
+   --typography-data-small-font-family: 'Geist Mono', monospace;
+
+   --typography-data-small-font-weight: 400;
+
+   --typography-data-small-font-style: normal;
+
+   --typography-data-small-font-stretch: normal;
+
+   --typography-data-small-letter-spacing: 0;
+
+   --typography-data-small-line-height: 16px;
+
+   --typography-data-small-paragraph-indent: 0;
+
+   --typography-data-small-paragraph-spacing: 0;
+
+   --typography-data-small-text-case: none;
+}
