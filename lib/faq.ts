@@ -28,12 +28,12 @@ export const DASHBOARD_FAQ_ITEMS: FAQItem[] = [
   {
     question: 'How does search work?',
     answer:
-      'Search matches titles, providers, host countries, and regions, and understands common variations (like "US" for "United States"). It favors precision over volume — expect fewer, more relevant results.',
+      'Search matches titles, providers, host countries, and regions, and understands common variations (like “US” for “United States”). It favors precision over volume — expect fewer, more relevant results.',
   },
   {
     question: 'How do I apply?',
     answer:
-      'Bursa never accepts applications directly. Selecting "Apply on official site" takes you to the provider’s own page to complete and submit your application there.',
+      'Bursa never accepts applications directly. Selecting “Apply on official site” takes you to the provider’s own page to complete and submit your application there.',
   },
   {
     question: 'Does Bursa guarantee I’ll get a scholarship?',
@@ -65,7 +65,7 @@ export const LANDING_FAQ_ITEMS: FAQItem[] = [
   {
     question: 'Does Bursa submit my application for me?',
     answer:
-      'No. Bursa is a discovery layer only. Every "Apply" link takes you to the scholarship provider’s own official page, where you apply directly.',
+      'No. Bursa is a discovery layer only. Every “Apply” link takes you to the scholarship provider’s own official page, where you apply directly.',
   },
   {
     question: 'How are scholarships matched to me?',

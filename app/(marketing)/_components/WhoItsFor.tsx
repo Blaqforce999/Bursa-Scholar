@@ -44,9 +44,12 @@ export function WhoItsFor() {
         Built for African students.
       </h2>
 
-      <div className="mt-40 grid gap-24 sm:grid-cols-3">
+      <div className="mt-40 flex snap-x gap-16 overflow-x-auto pb-4 sm:grid sm:snap-none sm:grid-cols-3 sm:gap-24 sm:overflow-visible sm:pb-0">
         {AUDIENCES.map((audience) => (
-          <div key={audience.heading} className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+          <div
+            key={audience.heading}
+            className="relative aspect-[3/4] w-[70vw] shrink-0 snap-start overflow-hidden rounded-2xl sm:w-auto sm:shrink"
+          >
             <Image
               src={audience.photo.url}
               alt={audience.photo.alt}

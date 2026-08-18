@@ -26,7 +26,7 @@ export function MarketingHeader() {
         <div className="flex items-center gap-12">
           <Link
             href="/auth?mode=login"
-            className="hidden text-ink-indigo hover:text-ink-indigo-light sm:inline"
+            className="min-h-44 content-center text-ink-indigo transition hover:text-ink-indigo-light"
             style={{ font: 'var(--font-button-label)' }}
           >
             Log in

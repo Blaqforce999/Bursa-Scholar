@@ -47,9 +47,16 @@ export const SORT_OPTIONS = {
 
 export type SortOption = keyof typeof SORT_OPTIONS;
 
-/** The single definition of "closing soon" across the app — matches the
- *  window already used in components/scholarship/DeadlineBadge.tsx. */
+/** The single definition of "closing soon" across the app — powers the
+ *  dashboard's "Closing soon" tab and its count copy. Deliberately wider
+ *  than DEADLINE_URGENT_WINDOW_DAYS below, which drives the red-color
+ *  urgency badge; "closing soon" and "urgent enough to alarm" aren't the
+ *  same threshold. */
 export const CLOSING_SOON_WINDOW_DAYS = 14;
+
+/** How close a deadline must be before DeadlineBadge renders it in
+ *  Reserved Red rather than neutral ink/grey. */
+export const DEADLINE_URGENT_WINDOW_DAYS = 7;
 
 export const FIELD_OF_STUDY_OPTIONS = [
   'Computer Science',

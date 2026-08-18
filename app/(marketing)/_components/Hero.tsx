@@ -119,7 +119,7 @@ const CLUSTER_CARDS: Array<{
         </p>
         <div className="flex flex-wrap gap-8">
           <Badge tone="warning">Full funding</Badge>
-          <Badge tone="success">Eligible for you</Badge>
+          <Badge tone="success">Eligible</Badge>
         </div>
       </Card>
     ),
@@ -132,13 +132,18 @@ export function Hero() {
       <div className="flex flex-col gap-32 lg:flex-row lg:items-center lg:gap-64">
         <div className="flex flex-col gap-24 lg:w-1/2">
           <h1
-            className="animate-cascade-in text-ink-indigo"
-            style={{ font: 'var(--font-display-large)', letterSpacing: 'var(--font-display-large-letter-spacing)' }}
+            className="animate-cascade-in text-ink-indigo [font:var(--font-heading-h1)] [letter-spacing:var(--font-heading-h1-letter-spacing)] md:[font:var(--font-display-large)] md:[letter-spacing:var(--font-display-large-letter-spacing)]"
           >
             Find scholarships worth applying for.
           </h1>
           <p
-            className="animate-cascade-in max-w-[480px] text-ink-muted-dark"
+            className="animate-cascade-in max-w-[480px] text-ink-muted-dark md:hidden"
+            style={{ font: 'var(--font-body-large)', animationDelay: '160ms' }}
+          >
+            Search by study level, field, and funding. See eligibility, compare, and apply.
+          </p>
+          <p
+            className="animate-cascade-in hidden max-w-[480px] text-ink-muted-dark md:block"
             style={{ font: 'var(--font-body-large)', animationDelay: '160ms' }}
           >
             Search by study level, field, destination, and funding. See your eligibility, compare

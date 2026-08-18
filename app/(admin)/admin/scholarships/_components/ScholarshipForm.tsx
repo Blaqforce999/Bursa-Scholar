@@ -97,7 +97,7 @@ export function ScholarshipForm({ mode, scholarship }: ScholarshipFormProps) {
           name="fieldsOfStudy"
           required
           enterKeyHint="next"
-          hint='Comma-separated. Use "Any field" if open to all.'
+          hint="Comma-separated. Use “Any field” if open to all."
           defaultValue={scholarship?.fieldsOfStudy.join(', ')}
         />
 

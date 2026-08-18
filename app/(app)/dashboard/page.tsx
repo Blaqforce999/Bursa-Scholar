@@ -10,6 +10,7 @@ import { cn } from '@/lib/cn';
 import { DashboardScholarshipCard } from '@/components/dashboard/DashboardScholarshipCard';
 import { DashboardControls } from '@/components/dashboard/DashboardControls';
 import { AskBursaButton } from '@/components/dashboard/AskBursaButton';
+import { PullToRefresh } from '@/components/shared/PullToRefresh';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 
@@ -84,7 +85,8 @@ export default async function DashboardHomePage({ searchParams }: PageProps) {
   const showClosingClause = closingSoonMatches.length > 0;
 
   return (
-    <div className="flex flex-col gap-24">
+    <PullToRefresh>
+      <div className="flex flex-col gap-24">
       <div className="flex flex-col gap-16 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-ink-muted" style={{ font: 'var(--font-body-small)' }}>
@@ -94,7 +96,7 @@ export default async function DashboardHomePage({ searchParams }: PageProps) {
             className="mt-4 text-ink-indigo"
             style={{ font: 'var(--font-heading-h2)', letterSpacing: 'var(--font-heading-h2-letter-spacing)' }}
           >
-            Discover scholarships
+            Your scholarships
           </h1>
           {(showMatchClause || showClosingClause) && (
             <p className="mt-4 text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
@@ -155,7 +157,8 @@ export default async function DashboardHomePage({ searchParams }: PageProps) {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </PullToRefresh>
   );
 }
 

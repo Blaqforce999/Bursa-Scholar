@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import { getCompareIds } from '@/lib/compare';
 import { db } from '@/lib/db';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { ButtonLink } from '@/components/ui/ButtonLink';
-import { CompareButton } from '@/components/scholarship/CompareButton';
+import { CompareTable } from '@/components/scholarship/CompareTable';
 import { FundingBadge } from '@/components/scholarship/FundingBadge';
 import { DeadlineBadge } from '@/components/scholarship/DeadlineBadge';
 import { STUDY_LEVEL_LABELS } from '@/lib/constants';
@@ -45,7 +44,7 @@ export default async function ComparePage() {
         {ordered.length < 2 ? (
           <EmptyState
             title="Add at least 2 scholarships to compare"
-            body='Select "Add to compare" on any scholarship card or detail page — up to 4 at a time.'
+            body="Select “Add to compare” on any scholarship card or detail page — up to 4 at a time."
             action={
               <ButtonLink href="/scholarships" variant="secondary">
                 Find scholarships
@@ -53,49 +52,7 @@ export default async function ComparePage() {
             }
           />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] border-collapse">
-              <thead>
-                <tr>
-                  <th className="w-[140px]"></th>
-                  {ordered.map((scholarship) => (
-                    <th key={scholarship.id} className="border-b border-border p-12 text-left align-top">
-                      <Link href={`/scholarships/${scholarship.slug}`} className="text-ink-indigo hover:underline">
-                        <span style={{ font: 'var(--font-heading-h4)' }}>{scholarship.title}</span>
-                      </Link>
-                      <p className="mt-4 text-ink-muted" style={{ font: 'var(--font-body-small)' }}>
-                        {scholarship.provider}
-                      </p>
-                      <div className="mt-8">
-                        <CompareButton scholarshipId={scholarship.id} initialSelected />
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {ROWS.map((row) => (
-                  <tr key={row.label}>
-                    <th
-                      className="border-b border-border-faint p-12 text-left align-top text-ink-muted"
-                      style={{ font: 'var(--font-body-small)' }}
-                    >
-                      {row.label}
-                    </th>
-                    {ordered.map((scholarship) => (
-                      <td
-                        key={scholarship.id}
-                        className="border-b border-border-faint p-12 align-top text-ink-indigo"
-                        style={{ font: 'var(--font-body-small)' }}
-                      >
-                        {row.render(scholarship)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <CompareTable ordered={ordered} rows={ROWS} />
         )}
       </div>
     </div>

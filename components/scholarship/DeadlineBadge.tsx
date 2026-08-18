@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/Badge';
+import { DEADLINE_URGENT_WINDOW_DAYS } from '@/lib/constants';
 
-const CLOSING_SOON_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
+const URGENT_WINDOW_MS = DEADLINE_URGENT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
 
 type DeadlineBadgeProps = {
   // required props first
@@ -23,14 +24,14 @@ export function DeadlineBadge({ deadlineAt, status }: DeadlineBadgeProps) {
     return <Badge tone="neutral">Deadline not yet confirmed</Badge>;
   }
 
-  const isClosingSoon = deadlineAt.getTime() - now < CLOSING_SOON_WINDOW_MS;
+  const isUrgent = deadlineAt.getTime() - now < URGENT_WINDOW_MS;
   const formatted = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(
     deadlineAt
   );
 
   return (
-    <Badge tone={isClosingSoon ? 'danger' : 'neutral'} style={{ font: 'var(--font-data-small)' }}>
-      {isClosingSoon ? `Closes ${formatted}` : `Deadline ${formatted}`}
+    <Badge tone={isUrgent ? 'danger' : 'neutral'} style={{ font: 'var(--font-data-small)' }}>
+      {isUrgent ? `Closes ${formatted}` : `Deadline ${formatted}`}
     </Badge>
   );
 }

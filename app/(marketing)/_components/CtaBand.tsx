@@ -24,7 +24,7 @@ export function CtaBand() {
             variant="ghost"
             className="text-inverse hover:bg-white/10"
           >
-            Create a free account
+            Create free account
           </ButtonLink>
         </div>
       </RevealOnScroll>

@@ -26,7 +26,10 @@ export function FeaturedScholarshipsGrid({ scholarships }: FeaturedScholarshipsG
     <>
       <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-3">
         {scholarships.map((scholarship) => (
-          <div key={scholarship.id} className="flex flex-col gap-12 rounded-2xl border border-border bg-surface-white p-20">
+          <div
+            key={scholarship.id}
+            className="flex select-none flex-col gap-12 rounded-2xl border border-border bg-surface-white p-20"
+          >
             <div className="flex items-center gap-8">
               <span
                 className="flex h-28 w-28 shrink-0 items-center justify-center rounded-lg bg-ink-indigo/10 text-ink-indigo"

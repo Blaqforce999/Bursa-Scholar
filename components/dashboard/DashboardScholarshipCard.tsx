@@ -2,12 +2,18 @@ import Link from 'next/link';
 import type { Scholarship } from '@prisma/client';
 import { cn } from '@/lib/cn';
 import { providerMonogram } from '@/lib/format';
-import { FUNDING_LEVEL_LABELS, STUDY_LEVEL_LABELS, CLOSING_SOON_WINDOW_DAYS } from '@/lib/constants';
+import {
+  FUNDING_LEVEL_LABELS,
+  STUDY_LEVEL_LABELS,
+  CLOSING_SOON_WINDOW_DAYS,
+  DEADLINE_URGENT_WINDOW_DAYS,
+} from '@/lib/constants';
 import { DashboardSaveButton } from '@/components/dashboard/DashboardSaveButton';
 import { ClockIcon } from '@/components/shared/icons';
 import type { EligibilityResult } from '@/lib/eligibility';
 
 const CLOSING_SOON_WINDOW_MS = CLOSING_SOON_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+const URGENT_WINDOW_MS = DEADLINE_URGENT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
 
 type DashboardScholarshipCardProps = {
   // required props first
@@ -33,7 +39,7 @@ export function DashboardScholarshipCard({ scholarship, isSaved, eligibility, re
     : `/scholarships/${scholarship.slug}`;
 
   return (
-    <article className="group relative flex flex-col gap-12 rounded-2xl border border-border bg-surface-white p-20 transition hover:border-border-firm">
+    <article className="group relative flex select-none flex-col gap-12 rounded-2xl border border-border bg-surface-white p-20 transition hover:border-border-firm active:bg-surface-warm-light">
       <Link
         href={detailHref}
         aria-label={scholarship.title}
@@ -83,7 +89,7 @@ export function DashboardScholarshipCard({ scholarship, isSaved, eligibility, re
 
       <div className="mt-auto flex items-center justify-between border-t border-border-faint pt-12">
         <span
-          className={cn('flex items-center gap-6', deadline.isClosingSoon ? 'text-danger' : 'text-ink-muted')}
+          className={cn('flex items-center gap-6', deadline.isUrgent ? 'text-danger' : 'text-ink-muted')}
           style={{ font: 'var(--font-data-small)' }}
         >
           <ClockIcon className="h-14 w-14" />
@@ -117,17 +123,18 @@ function getDeadlineInfo(scholarship: Pick<Scholarship, 'deadlineAt' | 'status'>
     scholarship.status === 'ARCHIVED' ||
     (scholarship.deadlineAt !== null && scholarship.deadlineAt.getTime() < now);
 
-  if (isClosed) return { label: 'Closed', isClosingSoon: false };
-  if (!scholarship.deadlineAt) return { label: 'Deadline TBC', isClosingSoon: false };
+  if (isClosed) return { label: 'Closed', isUrgent: false };
+  if (!scholarship.deadlineAt) return { label: 'Deadline TBC', isUrgent: false };
 
   const msLeft = scholarship.deadlineAt.getTime() - now;
   const isClosingSoon = msLeft < CLOSING_SOON_WINDOW_MS;
+  const isUrgent = msLeft < URGENT_WINDOW_MS;
 
   if (isClosingSoon) {
     const daysLeft = Math.max(0, Math.ceil(msLeft / (24 * 60 * 60 * 1000)));
-    return { label: `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`, isClosingSoon: true };
+    return { label: `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`, isUrgent };
   }
 
   const formatted = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(scholarship.deadlineAt);
-  return { label: formatted, isClosingSoon: false };
+  return { label: formatted, isUrgent: false };
 }

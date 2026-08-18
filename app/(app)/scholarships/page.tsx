@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/shared/EmptyState';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { FilterChip } from '@/components/scholarship/FilterChip';
 import { FilterBar } from '@/app/(app)/scholarships/_components/FilterBar';
+import { PullToRefresh } from '@/components/shared/PullToRefresh';
 import { STUDY_LEVEL_LABELS, FUNDING_LEVEL_LABELS } from '@/lib/constants';
 
 const FILTER_LABELS: Record<string, (value: string) => string> = {
@@ -65,7 +66,8 @@ export default async function ScholarshipsPage({ searchParams }: PageProps) {
   const returnTo = currentQuery ? `/scholarships?${currentQuery}` : '/scholarships';
 
   return (
-    <div>
+    <PullToRefresh>
+      <div>
       <h1
         className="text-ink-indigo"
         style={{ font: 'var(--font-heading-h2)', letterSpacing: 'var(--font-heading-h2-letter-spacing)' }}
@@ -156,6 +158,7 @@ export default async function ScholarshipsPage({ searchParams }: PageProps) {
           </p>
         </div>
       )}
-    </div>
+      </div>
+    </PullToRefresh>
   );
 }

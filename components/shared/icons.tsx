@@ -23,6 +23,7 @@ import {
   CheckmarkCircle02Icon,
   AlertCircleIcon,
   Share08Icon,
+  Menu01Icon,
 } from '@hugeicons/core-free-icons';
 import type { SVGProps } from 'react';
 
@@ -131,6 +132,10 @@ export function ErrorIcon(props: IconProps) {
 
 export function ShareIcon(props: IconProps) {
   return <HugeiconsIcon {...props} icon={Share08Icon} strokeWidth={STROKE_WIDTH} />;
+}
+
+export function MenuIcon(props: IconProps) {
+  return <HugeiconsIcon {...props} icon={Menu01Icon} strokeWidth={STROKE_WIDTH} />;
 }
 
 /** The dashboard/discover save control. No solid-fill variant exists in

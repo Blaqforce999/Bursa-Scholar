@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/cn';
 import { LogoMark } from '@/components/shared/LogoMark';
 import { useAssistant } from '@/components/app/AssistantProvider';
 import { HelpModal } from '@/components/app/HelpModal';
-import { HomeIcon, DiscoverIcon, SparkIcon, SavedIcon, CompareIcon, HelpIcon, UserIcon } from '@/components/shared/icons';
+import { MobileDrawer } from '@/components/app/MobileDrawer';
+import { HomeIcon, DiscoverIcon, SparkIcon, SavedIcon, CompareIcon, HelpIcon, UserIcon, MenuIcon } from '@/components/shared/icons';
 import type { ComponentType, SVGProps } from 'react';
 
 type AppRailUser = { name: string | null } | null;
@@ -28,18 +29,41 @@ const NAV_ITEMS: NavItem[] = [
   { key: 'compare', label: 'Compare', Icon: CompareIcon, href: '/compare' },
 ];
 
+/** Ask Bursa lives only in the mobile drawer on <lg — the bottom bar keeps
+ *  just the core browse destinations, per the hybrid nav model. */
+const MOBILE_BAR_ITEMS = NAV_ITEMS.filter((item) => item.key !== 'ask');
+
 /**
- * The app's whole navigation shell: a sticky icon+label rail on desktop,
- * a compact brand+account strip plus a bottom tab bar on mobile. Both
- * variants render the same NAV_ITEMS so the two can never drift apart.
+ * The app's whole navigation shell: a sticky icon+label rail on desktop
+ * (unchanged), a compact brand+menu strip plus a bottom tab bar on mobile.
+ * Mobile moves Ask Bursa, Help, and Profile into a slide-out drawer
+ * (MobileDrawer) so there's exactly one Ask Bursa entry point there instead
+ * of two.
  */
 export function AppRail({ user }: { user: AppRailUser }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { open: openAssistant } = useAssistant();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   // An anonymous visitor can still browse Discover/Compare (Bursa's
   // "discovery first" principle) but Home/Ask/Saved all assume a session.
   const items = user ? NAV_ITEMS : NAV_ITEMS.filter((item) => item.key === 'discover' || item.key === 'compare');
+  const mobileBarItems = user
+    ? MOBILE_BAR_ITEMS
+    : MOBILE_BAR_ITEMS.filter((item) => item.key === 'discover' || item.key === 'compare');
+
+  function closeDrawer() {
+    setIsDrawerOpen(false);
+    menuButtonRef.current?.focus();
+  }
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/');
+    router.refresh();
+  }
 
   return (
     <>
@@ -72,22 +96,29 @@ export function AppRail({ user }: { user: AppRailUser }) {
         </div>
       </nav>
 
-      <header className="fixed inset-x-0 top-0 z-30 flex h-56 items-center justify-between border-b border-border-faint bg-surface-white px-16 lg:hidden">
-        <Link href="/dashboard" aria-label="Bursa home">
+      <header className="fixed inset-x-0 top-0 z-30 flex h-56 items-center gap-8 border-b border-border-faint bg-surface-white px-8 lg:hidden">
+        <button
+          ref={menuButtonRef}
+          type="button"
+          aria-label="Open menu"
+          onClick={() => setIsDrawerOpen(true)}
+          className="flex h-44 w-44 shrink-0 items-center justify-center rounded-full text-ink-indigo transition hover:bg-surface-warm-light active:bg-surface-warm-light"
+        >
+          <MenuIcon className="h-22 w-22" />
+        </button>
+        <Link href="/dashboard" aria-label="Bursa home" className="flex-1">
           <LogoMark />
         </Link>
-        <div className="flex items-center gap-8">
-          <button
-            type="button"
-            aria-label="Help"
-            onClick={() => setIsHelpOpen(true)}
-            className="flex h-36 w-36 items-center justify-center rounded-full text-ink-muted transition hover:bg-surface-warm-light hover:text-ink-indigo"
-          >
-            <HelpIcon className="h-18 w-18" />
-          </button>
-          {user ? <AvatarMenu user={user} /> : <AccountEntry />}
-        </div>
       </header>
+
+      <MobileDrawer
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        onAsk={openAssistant}
+        onHelp={() => setIsHelpOpen(true)}
+        onLogout={handleLogout}
+        user={user}
+      />
 
       <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
 
@@ -96,7 +127,7 @@ export function AppRail({ user }: { user: AppRailUser }) {
         className="fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-border-faint bg-surface-white lg:hidden"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
-        {items.map((item) => (
+        {mobileBarItems.map((item) => (
           <div key={item.key} className="flex-1">
             <RailItem item={item} active={pathname === item.href} onAsk={openAssistant} />
           </div>
@@ -125,7 +156,7 @@ function RailItem({ item, active, onAsk }: { item: NavItem; active: boolean; onA
   );
 
   const content = (
-    <span className="flex flex-col items-center gap-2 py-6" style={{ font: 'var(--font-caption)' }}>
+    <span className="flex select-none flex-col items-center gap-2 py-6" style={{ font: 'var(--font-caption)' }}>
       {iconSlot}
       <span className={active ? 'text-ink-indigo' : 'text-ink-muted'}>{label}</span>
     </span>
@@ -137,7 +168,7 @@ function RailItem({ item, active, onAsk }: { item: NavItem; active: boolean; onA
         type="button"
         onClick={onAsk}
         aria-label="Ask Bursa"
-        className="flex w-full flex-col items-center transition hover:opacity-80"
+        className="flex min-h-44 w-full flex-col items-center justify-center transition hover:opacity-80 active:opacity-70"
       >
         {content}
       </button>
@@ -145,7 +176,10 @@ function RailItem({ item, active, onAsk }: { item: NavItem; active: boolean; onA
   }
 
   return (
-    <Link href={item.href!} className="flex w-full flex-col items-center transition hover:bg-surface-warm-light">
+    <Link
+      href={item.href!}
+      className="flex min-h-44 w-full flex-col items-center justify-center transition hover:bg-surface-warm-light active:bg-surface-warm-light"
+    >
       {content}
     </Link>
   );

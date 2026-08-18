@@ -82,7 +82,7 @@ export function HowItWorks() {
                 African Union PhD Research Grant
               </p>
               <div className="flex flex-wrap gap-8">
-                <Badge tone="success">Eligible for you</Badge>
+                <Badge tone="success">Eligible</Badge>
               </div>
               <ButtonLink href="/scholarships" size="md" className="self-start">
                 Apply on official site

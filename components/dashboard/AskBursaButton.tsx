@@ -10,7 +10,7 @@ export function AskBursaButton() {
     <button
       type="button"
       onClick={open}
-      className="flex h-44 shrink-0 items-center gap-8 rounded-full bg-ink-indigo px-20 text-inverse transition hover:bg-ink-indigo-light"
+      className="hidden h-44 shrink-0 items-center gap-8 rounded-full bg-ink-indigo px-20 text-inverse transition hover:bg-ink-indigo-light active:bg-ink-indigo-light md:flex"
       style={{ font: 'var(--font-button-label)' }}
     >
       <SparkIcon className="h-16 w-16 text-marigold" />

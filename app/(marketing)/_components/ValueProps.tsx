@@ -35,12 +35,15 @@ export function ValueProps() {
       >
         Scholarship search without the guesswork.
       </h2>
-      <p className="mt-12 max-w-[480px] text-ink-muted-dark" style={{ font: 'var(--font-body-large)' }}>
+      <p className="mt-12 max-w-[480px] text-ink-muted-dark md:hidden" style={{ font: 'var(--font-body-large)' }}>
+        Four steps to the scholarship worth applying for.
+      </p>
+      <p className="mt-12 hidden max-w-[480px] text-ink-muted-dark md:block" style={{ font: 'var(--font-body-large)' }}>
         Four steps stand between a long list of scholarships and the one worth applying for.
       </p>
 
       <dl className="mt-40 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        {VALUE_PROPS.map((item) => (
+        {VALUE_PROPS.map((item, index) => (
           <div
             key={item.heading}
             className={
@@ -49,6 +52,12 @@ export function ValueProps() {
                 : 'flex flex-col gap-16 rounded-2xl bg-surface-warm-light p-32 lg:p-40'
             }
           >
+            <span
+              className={item.accent ? 'text-marigold-light' : 'text-marigold-dark'}
+              style={{ font: 'var(--font-data-regular)' }}
+            >
+              {String(index + 1).padStart(2, '0')}
+            </span>
             <dt
               className={item.accent ? 'text-inverse' : 'text-ink-indigo'}
               style={{ font: 'var(--font-heading-h3)', letterSpacing: 'var(--font-heading-h3-letter-spacing)' }}

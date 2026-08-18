@@ -35,37 +35,45 @@ export function ScholarshipCard({
     : `/scholarships/${scholarship.slug}`;
 
   return (
-    <Card className="flex flex-col gap-12">
-      <div className="flex items-start justify-between gap-12">
-        <div>
+    <Card className="relative flex flex-col gap-12">
+      <Link
+        href={detailHref}
+        aria-label={scholarship.title}
+        className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-indigo"
+      />
+
+      <div className="flex select-none items-start justify-between gap-12">
+        <div className="min-w-0">
           <p className="text-ink-muted" style={{ font: 'var(--font-body-small)' }}>
             {scholarship.provider}
           </p>
-          <Link href={detailHref} className="hover:underline">
-            <h3
-              className="text-ink-indigo"
-              style={{ font: 'var(--font-heading-h4)', letterSpacing: 'var(--font-heading-h4-letter-spacing)' }}
-            >
-              {scholarship.title}
-            </h3>
-          </Link>
+          <h3
+            className="line-clamp-2 text-ink-indigo"
+            style={{ font: 'var(--font-heading-h4)', letterSpacing: 'var(--font-heading-h4-letter-spacing)' }}
+          >
+            {scholarship.title}
+          </h3>
         </div>
-        <SaveButton scholarshipId={scholarship.id} initialSaved={isSaved} isLoggedIn={isLoggedIn} />
+        <div className="relative z-20">
+          <SaveButton scholarshipId={scholarship.id} initialSaved={isSaved} isLoggedIn={isLoggedIn} />
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-8">
+      <div className="pointer-events-none flex flex-wrap gap-8">
         <FundingBadge level={scholarship.fundingLevel} />
         {eligibility !== undefined && <EligibilityBadge result={eligibility ?? null} />}
       </div>
 
-      <p className="text-ink-muted-dark" style={{ font: 'var(--font-body-small)' }}>
+      <p className="select-none text-ink-muted-dark" style={{ font: 'var(--font-body-small)' }}>
         {scholarship.studyLevels.map((level) => STUDY_LEVEL_LABELS[level]).join(', ')} ·{' '}
         {scholarship.hostCountry}
       </p>
 
-      <DeadlineBadge deadlineAt={scholarship.deadlineAt} status={scholarship.status} />
+      <div className="pointer-events-none">
+        <DeadlineBadge deadlineAt={scholarship.deadlineAt} status={scholarship.status} />
+      </div>
 
-      <div className="mt-auto pt-8">
+      <div className="relative z-20 mt-auto pt-8">
         <CompareButton scholarshipId={scholarship.id} initialSelected={isComparing} />
       </div>
     </Card>

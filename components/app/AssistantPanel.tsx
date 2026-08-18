@@ -39,9 +39,39 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(true);
+  const [dragY, setDragY] = useState(0);
+  const [areChipsExpanded, setAreChipsExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const stickToBottomRef = useRef(true);
   const nextId = useRef(0);
+  const dragStartY = useRef<number | null>(null);
+  const isDragging = useRef(false);
+
+  const DISMISS_THRESHOLD_PX = 96;
+
+  // Drag-to-dismiss is bound only to the mobile-only handle bar below (not
+  // the whole sheet), so it never fights the scrollable message list for
+  // touch gestures. Desktop/tablet (sm+) doesn't render the handle at all.
+  function handleDragStart(event: React.PointerEvent) {
+    dragStartY.current = event.clientY;
+    isDragging.current = true;
+  }
+
+  function handleDragMove(event: React.PointerEvent) {
+    if (!isDragging.current || dragStartY.current === null) return;
+    const delta = event.clientY - dragStartY.current;
+    setDragY(Math.max(0, delta));
+  }
+
+  function handleDragEnd() {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    dragStartY.current = null;
+    if (dragY > DISMISS_THRESHOLD_PX) {
+      onClose();
+    }
+    setDragY(0);
+  }
 
   function scrollToBottom(behavior: ScrollBehavior = 'smooth') {
     const el = scrollRef.current;
@@ -158,12 +188,26 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
         aria-modal="true"
         aria-label="Ask Bursa"
         aria-hidden={!isOpen}
+        style={dragY > 0 ? { transform: `translateY(${dragY}px)`, transition: 'none' } : undefined}
         className={cn(
-          'fixed inset-y-0 right-0 z-50 flex w-full flex-col bg-surface-white shadow-lg transition-transform duration-300 motion-reduce:transition-none sm:w-[420px]',
-          isOpen ? 'translate-x-0' : 'pointer-events-none translate-x-full'
+          'fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] max-h-[85dvh] flex-col rounded-t-3xl bg-surface-white shadow-lg transition-transform duration-300 motion-reduce:transition-none',
+          'sm:inset-x-auto sm:right-0 sm:top-0 sm:bottom-auto sm:h-dvh sm:max-h-none sm:w-[420px] sm:translate-y-0 sm:rounded-none',
+          isOpen ? 'translate-y-0 sm:translate-x-0' : 'pointer-events-none translate-y-full sm:translate-x-full'
         )}
       >
-        <header className="flex items-center justify-between gap-12 border-b border-border-faint px-16 py-12">
+        <div
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
+          style={{ touchAction: 'none' }}
+          aria-hidden="true"
+          className="flex h-20 shrink-0 items-center justify-center sm:hidden"
+        >
+          <span className="h-4 w-36 rounded-full bg-border-strong" />
+        </div>
+
+        <header className="select-none flex items-center justify-between gap-12 border-b border-border-faint px-16 py-12">
           <div className="flex items-center gap-8">
             <span className="flex h-32 w-32 items-center justify-center rounded-xl bg-ink-indigo text-marigold">
               <SparkIcon className="h-16 w-16" />
@@ -184,7 +228,7 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
 
         <div className="relative flex flex-1 flex-col overflow-hidden">
           <div ref={scrollRef} onScroll={handleScroll} className="flex flex-1 flex-col gap-16 overflow-y-auto px-16 py-16">
-            <p className="text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
+            <p className="select-none text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
               Hi{firstName ? ` ${firstName}` : ''} 👋 Ask me to find, explain, or compare scholarships. I only surface
               real matches from Bursa.
             </p>
@@ -213,22 +257,36 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
             event.preventDefault();
             handleSend(input);
           }}
-          className="border-t border-border-faint px-16 py-12"
+          className="border-t border-border-faint px-16 pt-12"
+          style={{ paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}
         >
-          <div className="flex flex-wrap gap-8 pb-12">
-            {STARTER_CHIPS.map((chip) => (
-              <button
-                key={chip}
-                type="button"
-                disabled={isThinking}
-                onClick={() => handleSend(chip)}
-                className="rounded-full border border-border px-12 py-6 text-ink-indigo transition hover:bg-surface-warm-light disabled:pointer-events-none disabled:opacity-40"
-                style={{ font: 'var(--font-body-small)' }}
-              >
-                {chip}
-              </button>
-            ))}
-          </div>
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setAreChipsExpanded((value) => !value)}
+              aria-expanded={areChipsExpanded}
+              className="mb-8 select-none text-ink-muted underline transition hover:text-ink-indigo"
+              style={{ font: 'var(--font-caption)' }}
+            >
+              {areChipsExpanded ? 'Hide suggestions' : 'Suggestions'}
+            </button>
+          )}
+          {(messages.length === 0 || areChipsExpanded) && (
+            <div className="flex flex-wrap gap-8 pb-12">
+              {STARTER_CHIPS.map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  disabled={isThinking}
+                  onClick={() => handleSend(chip)}
+                  className="rounded-full border border-border px-12 py-6 text-ink-indigo transition hover:bg-surface-warm-light disabled:pointer-events-none disabled:opacity-40"
+                  style={{ font: 'var(--font-body-small)' }}
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="flex items-center gap-8">
             <input
               value={input}
@@ -288,7 +346,7 @@ function MessageRow({ message }: { message: ChatMessage }) {
           <Link
             key={result.id}
             href={`/scholarships/${result.slug}`}
-            className="flex items-center gap-12 rounded-xl border border-border-faint px-12 py-10 transition hover:border-border hover:bg-surface-warm-light"
+            className="relative z-10 flex select-none items-center gap-12 rounded-2xl border border-border px-12 py-10 transition hover:bg-surface-warm-light active:bg-surface-warm-light"
           >
             <span
               className="flex h-32 w-32 shrink-0 items-center justify-center rounded-lg bg-ink-indigo/10 text-ink-indigo"
@@ -297,7 +355,7 @@ function MessageRow({ message }: { message: ChatMessage }) {
               {providerMonogram(result.provider)}
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-ink-indigo" style={{ font: 'var(--font-button-label)' }}>
+              <span className="line-clamp-2 text-ink-indigo" style={{ font: 'var(--font-button-label)' }}>
                 {result.title}
               </span>
               <span className="block truncate text-ink-muted" style={{ font: 'var(--font-body-small)' }}>
