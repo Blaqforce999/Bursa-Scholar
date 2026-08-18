@@ -4,17 +4,17 @@ export const DASHBOARD_FAQ_ITEMS: FAQItem[] = [
   {
     question: 'How does Bursa work?',
     answer:
-      'Bursa is a free discovery layer for scholarships open to African students. It searches, matches, and organizes real, curated opportunities — applications always happen on the provider’s own site.',
+      'Bursa is a free discovery layer for scholarships open to African students. It searches, matches, and organizes real, curated opportunities. Applications always happen on the provider’s own site.',
   },
   {
     question: 'How does matching work?',
     answer:
-      'Bursa compares your nationality, study level, and field of study against each scholarship’s real eligibility rules. It’s rule-based and explainable — never a black-box AI guess.',
+      'Bursa compares your nationality, study level, and field of study against each scholarship’s real eligibility rules. It’s rule-based and explainable, never a black-box AI guess.',
   },
   {
     question: 'What do Eligible, Partial match, and Not eligible mean?',
     answer:
-      'Eligible means every checkable requirement matches your profile. Partial match means nothing disqualifies you, but part of your profile (like field of study) isn’t set yet, so it can’t be fully confirmed. Not eligible means at least one requirement — like nationality or study level — doesn’t match.',
+      'Eligible means every checkable requirement matches your profile. Partial match means nothing disqualifies you, but part of your profile (like field of study) isn’t set yet, so it can’t be fully confirmed. Not eligible means at least one requirement, like nationality or study level, doesn’t match.',
   },
   {
     question: 'What does saving a scholarship do?',
@@ -28,7 +28,7 @@ export const DASHBOARD_FAQ_ITEMS: FAQItem[] = [
   {
     question: 'How does search work?',
     answer:
-      'Search matches titles, providers, host countries, and regions, and understands common variations (like “US” for “United States”). It favors precision over volume — expect fewer, more relevant results.',
+      'Search matches titles, providers, host countries, and regions, and understands common variations (like “US” for “United States”). It favors precision over volume, expect fewer, more relevant results.',
   },
   {
     question: 'How do I apply?',
@@ -38,17 +38,17 @@ export const DASHBOARD_FAQ_ITEMS: FAQItem[] = [
   {
     question: 'Does Bursa guarantee I’ll get a scholarship?',
     answer:
-      'No. Eligibility labels reflect how well you match a scholarship’s stated requirements — they’re not a guarantee of acceptance, funding, or any outcome.',
+      'No. Eligibility labels reflect how well you match a scholarship’s stated requirements. They’re not a guarantee of acceptance, funding, or any outcome.',
   },
   {
     question: 'Where does the scholarship data come from?',
     answer:
-      'Every listing links to a real, verified official source. Bursa doesn’t invent deadlines, links, or requirements — broken links get flagged and fixed, not silently swapped.',
+      'Every listing links to a real, verified official source. Bursa doesn’t invent deadlines, links, or requirements. Broken links get flagged and fixed, not silently swapped.',
   },
   {
     question: 'Is my account and profile data private?',
     answer:
-      'Your saved scholarships, compare list, and profile are tied to your account only — no other user can see them. Bursa is free and never sells your data.',
+      'Your saved scholarships, compare list, and profile are tied to your account only. No other user can see them. Bursa is free and never sells your data.',
   },
 ];
 

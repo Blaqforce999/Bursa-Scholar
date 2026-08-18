@@ -13,7 +13,7 @@ import type { ComponentType, SVGProps } from 'react';
 
 type AppRailUser = { name: string | null } | null;
 
-type NavItem = {
+export type NavItem = {
   key: string;
   label: string;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
@@ -29,16 +29,12 @@ const NAV_ITEMS: NavItem[] = [
   { key: 'compare', label: 'Compare', Icon: CompareIcon, href: '/compare' },
 ];
 
-/** Ask Bursa lives only in the mobile drawer on <lg — the bottom bar keeps
- *  just the core browse destinations, per the hybrid nav model. */
-const MOBILE_BAR_ITEMS = NAV_ITEMS.filter((item) => item.key !== 'ask');
-
 /**
  * The app's whole navigation shell: a sticky icon+label rail on desktop
- * (unchanged), a compact brand+menu strip plus a bottom tab bar on mobile.
- * Mobile moves Ask Bursa, Help, and Profile into a slide-out drawer
- * (MobileDrawer) so there's exactly one Ask Bursa entry point there instead
- * of two.
+ * (unchanged), a compact brand+menu strip on mobile with no bottom tab bar
+ * at all — every destination (Home, Discover, Ask, Saved, Compare, plus
+ * Help/Profile/Log out) lives in the slide-out drawer (MobileDrawer),
+ * mirroring the desktop rail's own order and grouping.
  */
 export function AppRail({ user }: { user: AppRailUser }) {
   const pathname = usePathname();
@@ -50,9 +46,6 @@ export function AppRail({ user }: { user: AppRailUser }) {
   // An anonymous visitor can still browse Discover/Compare (Bursa's
   // "discovery first" principle) but Home/Ask/Saved all assume a session.
   const items = user ? NAV_ITEMS : NAV_ITEMS.filter((item) => item.key === 'discover' || item.key === 'compare');
-  const mobileBarItems = user
-    ? MOBILE_BAR_ITEMS
-    : MOBILE_BAR_ITEMS.filter((item) => item.key === 'discover' || item.key === 'compare');
 
   function closeDrawer() {
     setIsDrawerOpen(false);
@@ -114,6 +107,8 @@ export function AppRail({ user }: { user: AppRailUser }) {
       <MobileDrawer
         isOpen={isDrawerOpen}
         onClose={closeDrawer}
+        navItems={items}
+        activePath={pathname}
         onAsk={openAssistant}
         onHelp={() => setIsHelpOpen(true)}
         onLogout={handleLogout}
@@ -121,18 +116,6 @@ export function AppRail({ user }: { user: AppRailUser }) {
       />
 
       <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
-
-      <nav
-        aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-border-faint bg-surface-white lg:hidden"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-      >
-        {mobileBarItems.map((item) => (
-          <div key={item.key} className="flex-1">
-            <RailItem item={item} active={pathname === item.href} onAsk={openAssistant} />
-          </div>
-        ))}
-      </nav>
     </>
   );
 }

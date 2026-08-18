@@ -18,7 +18,7 @@ export default async function AdminScholarshipsPage() {
     <div>
       <div className="flex items-center justify-between">
         <p className="text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
-          {scholarships.length} scholarship{scholarships.length === 1 ? '' : 's'} in the database — any
+          {scholarships.length} scholarship{scholarships.length === 1 ? '' : 's'} in the database, any
           status.
         </p>
         <ButtonLink href="/admin/scholarships/new" size="sm">

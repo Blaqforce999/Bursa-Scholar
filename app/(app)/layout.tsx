@@ -30,7 +30,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <AppRail user={user} />
         <main
           id="main-content"
-          className="mx-auto w-full max-w-[1200px] flex-1 px-16 pb-96 pt-72 sm:px-24 lg:px-32 lg:pb-48 lg:pt-32"
+          className="mx-auto w-full max-w-[1200px] flex-1 px-16 pb-48 pt-72 sm:px-24 lg:px-32 lg:pt-32"
         >
           {children}
         </main>

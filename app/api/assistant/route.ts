@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     if (!rateLimit(`assistant:${session.id}`, 20, 60_000)) {
       return NextResponse.json(
-        { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many questions at once — try again in a minute.' } },
+        { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many questions at once. Try again in a minute.' } },
         { status: 429 }
       );
     }

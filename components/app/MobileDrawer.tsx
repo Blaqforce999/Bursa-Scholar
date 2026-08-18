@@ -3,13 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
-import {
-  CloseIcon,
-  SparkIcon,
-  ChevronRightIcon,
-  HelpIcon,
-  UserIcon,
-} from '@/components/shared/icons';
+import { CloseIcon, ChevronRightIcon, HelpIcon, UserIcon } from '@/components/shared/icons';
+import type { NavItem } from '@/components/app/AppRail';
 
 const APP_VERSION = 'v0.1.0';
 const SWIPE_CLOSE_THRESHOLD_PX = 80;
@@ -21,6 +16,8 @@ type MobileDrawerProps = {
   // required props first
   isOpen: boolean;
   onClose: () => void;
+  navItems: NavItem[];
+  activePath: string;
   onAsk: () => void;
   onHelp: () => void;
   onLogout: () => void;
@@ -28,12 +25,12 @@ type MobileDrawerProps = {
 };
 
 /**
- * The mobile-only (md:hidden) left-hand account drawer. Ask Bursa lives
- * here as the single mobile entry point for the feature (the old bottom
- * "Ask" tab and the dashboard's inline button are both retired/hidden on
- * mobile in favor of this one row) — see AppRail and AskBursaButton.
+ * The mobile-only (md:hidden) left-hand nav drawer — the sole mobile nav
+ * surface, since AppRail no longer renders a bottom tab bar. Renders the
+ * same NavItem list as the desktop rail, in the same order, so mobile and
+ * desktop navigation never drift apart.
  */
-export function MobileDrawer({ isOpen, onClose, onAsk, onHelp, onLogout, user }: MobileDrawerProps) {
+export function MobileDrawer({ isOpen, onClose, navItems, activePath, onAsk, onHelp, onLogout, user }: MobileDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const [dragX, setDragX] = useState(0);
   const dragStartX = useRef<number | null>(null);
@@ -202,28 +199,52 @@ export function MobileDrawer({ isOpen, onClose, onAsk, onHelp, onLogout, user }:
           )}
         </div>
 
-        <nav aria-label="Account" className="flex flex-1 flex-col overflow-y-auto">
-          {user && (
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onAsk();
-                }}
-                className="flex min-h-44 select-none items-center gap-12 px-20 py-16 text-left transition hover:bg-surface-warm-light active:bg-surface-warm-light"
+        <nav aria-label="Primary" className="flex flex-1 flex-col overflow-y-auto py-8">
+          {navItems.map((item) => {
+            if (item.isAsk) {
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onAsk();
+                  }}
+                  className="flex min-h-44 select-none items-center gap-12 px-20 py-12 text-left transition hover:bg-surface-warm-light active:bg-surface-warm-light"
+                >
+                  <span className="flex h-32 w-32 shrink-0 items-center justify-center rounded-xl bg-ink-indigo text-marigold">
+                    <item.Icon className="h-16 w-16" />
+                  </span>
+                  <span className="flex-1 text-ink-indigo" style={{ font: 'var(--font-button-label)' }}>
+                    {item.label} Bursa
+                  </span>
+                  <ChevronRightIcon className="h-18 w-18 shrink-0 text-ink-muted" />
+                </button>
+              );
+            }
+
+            const active = activePath === item.href;
+            return (
+              <Link
+                key={item.key}
+                href={item.href!}
+                onClick={onClose}
+                className="flex min-h-44 select-none items-center gap-12 px-20 py-12 text-ink-indigo transition hover:bg-surface-warm-light active:bg-surface-warm-light"
               >
-                <span className="flex h-32 w-32 shrink-0 items-center justify-center rounded-xl bg-ink-indigo text-marigold">
-                  <SparkIcon className="h-16 w-16" />
+                <span
+                  className={cn(
+                    'flex h-32 w-32 shrink-0 items-center justify-center rounded-full',
+                    active ? 'bg-ink-indigo/10 text-ink-indigo' : 'text-ink-muted'
+                  )}
+                >
+                  <item.Icon className="h-20 w-20" />
                 </span>
-                <span className="flex-1 text-ink-indigo" style={{ font: 'var(--font-button-label)' }}>
-                  Ask Bursa
-                </span>
-                <ChevronRightIcon className="h-18 w-18 shrink-0 text-ink-muted" />
-              </button>
-              <div className="border-t border-border-faint" />
-            </>
-          )}
+                <span style={{ font: 'var(--font-button-label)' }}>{item.label}</span>
+              </Link>
+            );
+          })}
+
+          <div className="my-8 border-t border-border-faint" />
 
           <p
             className="select-none px-20 pb-4 pt-16 text-ink-muted"

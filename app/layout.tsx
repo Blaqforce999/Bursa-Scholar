@@ -10,7 +10,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Bursa — Find scholarships worth applying for',
+  title: 'Bursa: Find scholarships worth applying for',
   description:
     'Search scholarships by study level, field, destination, and funding. See your eligibility, compare your options, and apply through the official source.',
 };

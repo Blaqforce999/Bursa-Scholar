@@ -234,7 +234,7 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
             </p>
 
             {messages.map((message) => (
-              <MessageRow key={message.id} message={message} />
+              <MessageRow key={message.id} message={message} onClose={onClose} />
             ))}
 
             {isThinking && <ThinkingIndicator />}
@@ -311,7 +311,7 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
   );
 }
 
-function MessageRow({ message }: { message: ChatMessage }) {
+function MessageRow({ message, onClose }: { message: ChatMessage; onClose: () => void }) {
   if (message.role === 'user') {
     return (
       <div className="animate-message-in flex justify-end">
@@ -346,6 +346,7 @@ function MessageRow({ message }: { message: ChatMessage }) {
           <Link
             key={result.id}
             href={`/scholarships/${result.slug}`}
+            onClick={onClose}
             className="relative z-10 flex select-none items-center gap-12 rounded-2xl border border-border px-12 py-10 transition hover:bg-surface-warm-light active:bg-surface-warm-light"
           >
             <span

@@ -17,7 +17,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
         Something went wrong.
       </h1>
       <p className="text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
-        Please try again later. If this keeps happening, come back in a little while — nothing you did
+        Please try again later. If this keeps happening, come back in a little while. Nothing you did
         caused this.
       </p>
       <Button onClick={reset}>Try again</Button>
