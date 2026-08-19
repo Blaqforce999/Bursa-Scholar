@@ -8,6 +8,15 @@ type PageProps = {
   searchParams: Promise<{ mode?: string; next?: string }>;
 };
 
+/** Only ever a same-origin relative path — never trust `next` as an
+ *  absolute or protocol-relative URL, which could redirect off Bursa
+ *  right after a successful login. */
+function sanitizeNext(next: string | undefined): string | undefined {
+  if (!next) return undefined;
+  if (!next.startsWith('/') || next.startsWith('//')) return undefined;
+  return next;
+}
+
 const COPY = {
   login: {
     heading: 'Welcome back',
@@ -26,7 +35,7 @@ const COPY = {
 export default async function AuthPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const mode = params.mode === 'signup' ? 'signup' : 'login';
-  const next = params.next;
+  const next = sanitizeNext(params.next);
 
   const user = await getSession();
   if (user) redirect(next || (user.onboardedAt ? '/dashboard' : '/onboarding'));
