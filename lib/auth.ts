@@ -14,11 +14,26 @@ const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days, per security.md
  * cross-origin ones, so a mismatched Origin is a reliable signal of a
  * cross-site request. Missing Origin (some non-browser clients) is allowed
  * through rather than blocked, sameSite already covers the browser case.
+ *
+ * Compared against the request's own Host header, not a static configured
+ * URL — a fixed NEXT_PUBLIC_APP_URL can silently drift from whatever
+ * domain the app is actually served on (a custom domain vs. Vercel's
+ * assigned URL, a preview deployment, a trailing slash), which locked out
+ * every real login until this was caught. Comparing to the request's own
+ * host is self-correcting regardless of which domain it's served from.
  */
 export function isTrustedOrigin(req: { headers: Headers }): boolean {
   const origin = req.headers.get('origin');
   if (!origin) return true;
-  return origin === env.NEXT_PUBLIC_APP_URL;
+
+  const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host');
+  if (!host) return origin === env.NEXT_PUBLIC_APP_URL;
+
+  try {
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
 }
 
 export async function hashPassword(password: string) {
