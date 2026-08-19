@@ -1,5 +1,5 @@
 import type { Scholarship } from '@prisma/client';
-import { searchScholarships } from '@/lib/scholarships';
+import { searchScholarships, getFilterOptions } from '@/lib/scholarships';
 import { getEligibility, type EligibilityProfile } from '@/lib/eligibility';
 import {
   FUNDING_LEVEL_LABELS,
@@ -45,6 +45,17 @@ function detectCountryMention(text: string): string | undefined {
 
 function detectFieldMention(text: string): string | undefined {
   return FIELD_OF_STUDY_OPTIONS.find((field) => field !== 'Other' && text.includes(field.toLowerCase()));
+}
+
+/**
+ * Extracts a capitalized phrase following "in" from the ORIGINAL message
+ * (not lowercased — capitalization is the only signal here that a proper
+ * noun, like a place, was named). Under-triggers on lowercase phrasing by
+ * design rather than risk false positives elsewhere; see interpretQuery.
+ */
+function extractDestinationCandidate(message: string): string | undefined {
+  const match = message.match(/\bin\s+([A-Z][a-zA-Z]*(?:\s+[A-Z][a-zA-Z]*)*)/);
+  return match ? match[1].trim() : undefined;
 }
 
 /**
@@ -115,7 +126,9 @@ function buildConversationalReply(message: string): string {
  * filters (lib/scholarships.ts). Plain keyword matching today; see the
  * LLM SEAM above for where real language understanding would slot in.
  */
-export function interpretQuery(message: string): { filters: Record<string, string | undefined>; intent: Intent } {
+export function interpretQuery(
+  message: string
+): { filters: Record<string, string | undefined>; intent: Intent; destinationCandidate?: string } {
   const text = message.toLowerCase();
   const filters: Record<string, string | undefined> = {};
   let intent: Intent = 'general';
@@ -148,7 +161,24 @@ export function interpretQuery(message: string): { filters: Record<string, strin
     if (intent === 'general') intent = 'field';
   }
 
-  return { filters, intent };
+  // A destination (host country/region) is a distinct concept from
+  // nationality above — only surfaced here as a raw candidate. Whether it's
+  // a real, servable place is checked against live data in
+  // answerAssistantQuery, not here (this function stays synchronous).
+  // Already-recognized fields and nationalities are excluded so "Master's
+  // in Computer Science" or "in Nigeria" keep behaving exactly as before.
+  const rawDestination = extractDestinationCandidate(message);
+  let destinationCandidate: string | undefined;
+  if (rawDestination) {
+    const lowerCandidate = rawDestination.toLowerCase();
+    const isKnownField = FIELD_OF_STUDY_OPTIONS.some((field) => field.toLowerCase() === lowerCandidate);
+    const isKnownNationality = AFRICAN_COUNTRIES.some((country) => country.toLowerCase() === lowerCandidate);
+    if (!isKnownField && !isKnownNationality) {
+      destinationCandidate = rawDestination;
+    }
+  }
+
+  return { filters, intent, destinationCandidate };
 }
 
 function formatDeadlineLabel(scholarship: Pick<Scholarship, 'deadlineAt' | 'status'>): string {
@@ -208,7 +238,27 @@ export async function answerAssistantQuery(message: string, profile: Eligibility
     return { summary: buildConversationalReply(message), results: [], verified: false };
   }
 
-  const { filters, intent } = interpretQuery(message);
+  const { filters, intent, destinationCandidate } = interpretQuery(message);
+
+  if (destinationCandidate) {
+    const { hostCountries, regions } = await getFilterOptions();
+    const lowerCandidate = destinationCandidate.toLowerCase();
+    const matchedHostCountry = hostCountries.find((country) => country.toLowerCase() === lowerCandidate);
+    const matchedRegion = regions.find((region) => region.toLowerCase() === lowerCandidate);
+
+    if (matchedHostCountry) {
+      filters.hostCountry = matchedHostCountry;
+    } else if (matchedRegion) {
+      filters.region = matchedRegion;
+    } else {
+      return {
+        summary: `I don't have any scholarships in **${destinationCandidate}** right now. Try Discover to browse everything.`,
+        results: [],
+        verified: false,
+      };
+    }
+  }
+
   const { scholarships } = await searchScholarships(filters);
   let pool = scholarships.filter((scholarship) => scholarship.status === 'PUBLISHED');
 
