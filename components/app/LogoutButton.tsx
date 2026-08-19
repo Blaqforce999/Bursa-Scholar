@@ -1,23 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { LogoutConfirmModal } from '@/components/app/LogoutConfirmModal';
 
 export function LogoutButton() {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  async function handleLogout() {
-    setIsSubmitting(true);
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/');
-    router.refresh();
-  }
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   return (
-    <Button variant="secondary" size="sm" className="px-16" onClick={handleLogout} disabled={isSubmitting}>
-      {isSubmitting ? 'Logging out…' : 'Log out'}
-    </Button>
+    <>
+      <Button variant="secondary" size="sm" className="px-16" onClick={() => setIsConfirmOpen(true)}>
+        Log out
+      </Button>
+      <LogoutConfirmModal isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)} />
+    </>
   );
 }

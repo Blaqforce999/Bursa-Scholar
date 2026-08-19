@@ -2,13 +2,14 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
 import { LogoMark } from '@/components/shared/LogoMark';
 import { useAssistant } from '@/components/app/AssistantProvider';
 import { HelpModal } from '@/components/app/HelpModal';
 import { MobileDrawer } from '@/components/app/MobileDrawer';
 import { DeleteAccountModal } from '@/components/app/DeleteAccountModal';
+import { LogoutConfirmModal } from '@/components/app/LogoutConfirmModal';
 import { HomeIcon, DiscoverIcon, SparkIcon, SavedIcon, CompareIcon, HelpIcon, UserIcon, MenuIcon } from '@/components/shared/icons';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -39,11 +40,11 @@ const NAV_ITEMS: NavItem[] = [
  */
 export function AppRail({ user }: { user: AppRailUser }) {
   const pathname = usePathname();
-  const router = useRouter();
   const { open: openAssistant } = useAssistant();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   // An anonymous visitor can still browse Discover/Compare (Bursa's
   // "discovery first" principle) but Home/Ask/Saved all assume a session.
@@ -52,12 +53,6 @@ export function AppRail({ user }: { user: AppRailUser }) {
   function closeDrawer() {
     setIsDrawerOpen(false);
     menuButtonRef.current?.focus();
-  }
-
-  async function handleLogout() {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/');
-    router.refresh();
   }
 
   return (
@@ -87,7 +82,15 @@ export function AppRail({ user }: { user: AppRailUser }) {
           >
             <HelpIcon className="h-20 w-20" />
           </button>
-          {user ? <AvatarMenu user={user} onDeleteAccount={() => setIsDeleteAccountOpen(true)} /> : <AccountEntry />}
+          {user ? (
+            <AvatarMenu
+              user={user}
+              onLogout={() => setIsLogoutConfirmOpen(true)}
+              onDeleteAccount={() => setIsDeleteAccountOpen(true)}
+            />
+          ) : (
+            <AccountEntry />
+          )}
         </div>
       </nav>
 
@@ -113,13 +116,14 @@ export function AppRail({ user }: { user: AppRailUser }) {
         activePath={pathname}
         onAsk={openAssistant}
         onHelp={() => setIsHelpOpen(true)}
-        onLogout={handleLogout}
+        onLogout={() => setIsLogoutConfirmOpen(true)}
         onDeleteAccount={() => setIsDeleteAccountOpen(true)}
         user={user}
       />
 
       <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
       <DeleteAccountModal isOpen={isDeleteAccountOpen} onClose={() => setIsDeleteAccountOpen(false)} />
+      <LogoutConfirmModal isOpen={isLogoutConfirmOpen} onClose={() => setIsLogoutConfirmOpen(false)} />
     </>
   );
 }
@@ -172,9 +176,16 @@ function RailItem({ item, active, onAsk }: { item: NavItem; active: boolean; onA
   );
 }
 
-function AvatarMenu({ user, onDeleteAccount }: { user: { name: string | null }; onDeleteAccount: () => void }) {
+function AvatarMenu({
+  user,
+  onLogout,
+  onDeleteAccount,
+}: {
+  user: { name: string | null };
+  onLogout: () => void;
+  onDeleteAccount: () => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const initials =
     (user.name ?? 'You')
       .split(' ')
@@ -182,12 +193,6 @@ function AvatarMenu({ user, onDeleteAccount }: { user: { name: string | null }; 
       .slice(0, 2)
       .map((word) => word[0]?.toUpperCase())
       .join('') || 'Y';
-
-  async function handleLogout() {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/');
-    router.refresh();
-  }
 
   return (
     <div className="relative">
@@ -222,7 +227,10 @@ function AvatarMenu({ user, onDeleteAccount }: { user: { name: string | null }; 
             <button
               type="button"
               role="menuitem"
-              onClick={handleLogout}
+              onClick={() => {
+                setIsOpen(false);
+                onLogout();
+              }}
               className="rounded-lg px-12 py-8 text-left text-ink-indigo transition hover:bg-surface-warm-light"
               style={{ font: 'var(--font-body-small)' }}
             >

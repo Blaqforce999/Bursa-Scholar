@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/Input';
 import { PasswordInput } from '@/components/ui/PasswordInput';
@@ -14,11 +15,15 @@ type AuthFormProps = {
   mode: 'signup' | 'login';
   // optional props after
   next?: string;
+  /** Only true once a domain is verified with Resend — see
+   *  EMAIL_VERIFICATION_ENABLED in lib/env.ts. Hides the link entirely
+   *  rather than showing a dead end when email isn't available yet. */
+  isPasswordResetEnabled?: boolean;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const PASSWORD_RULES = [
+export const PASSWORD_RULES = [
   { key: 'length', label: '8+ characters', test: (v: string) => v.length >= 8 },
   { key: 'upper', label: '1 uppercase letter', test: (v: string) => /[A-Z]/.test(v) },
   { key: 'number', label: '1 number', test: (v: string) => /[0-9]/.test(v) },
@@ -39,7 +44,7 @@ function validatePassword(value: string, mode: 'signup' | 'login'): string | und
   return undefined;
 }
 
-function PasswordRequirements({ password, visible }: { password: string; visible: boolean }) {
+export function PasswordRequirements({ password, visible }: { password: string; visible: boolean }) {
   return (
     <ul
       className={cn('flex flex-wrap gap-x-12 gap-y-4 transition-opacity', visible ? 'opacity-100' : 'opacity-0')}
@@ -62,7 +67,7 @@ function PasswordRequirements({ password, visible }: { password: string; visible
   );
 }
 
-export function AuthForm({ mode, next }: AuthFormProps) {
+export function AuthForm({ mode, next, isPasswordResetEnabled }: AuthFormProps) {
   const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -187,6 +192,15 @@ export function AuthForm({ mode, next }: AuthFormProps) {
               password={password}
               visible={passwordFocused || (passwordTouched && Boolean(passwordError))}
             />
+          )}
+          {mode === 'login' && isPasswordResetEnabled && (
+            <Link
+              href="/forgot-password"
+              className="self-end text-ink-indigo underline"
+              style={{ font: 'var(--font-body-small)' }}
+            >
+              Forgot password?
+            </Link>
           )}
         </div>
       </FormShell>

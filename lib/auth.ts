@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 import { clearCompare } from '@/lib/compare';
 import { env } from '@/lib/env';
 
-const SESSION_COOKIE = 'bursa_session';
+export const SESSION_COOKIE = 'bursa_session';
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days, per security.md
 
 /**

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getSession } from '@/lib/auth';
+import { env } from '@/lib/env';
 import { Card } from '@/components/ui/Card';
 import { AuthForm } from '@/components/shared/AuthForm';
 
@@ -56,7 +57,7 @@ export default async function AuthPage({ searchParams }: PageProps) {
         {copy.subheading}
       </p>
       <Card className="mt-24">
-        <AuthForm mode={mode} next={next} />
+        <AuthForm mode={mode} next={next} isPasswordResetEnabled={env.EMAIL_VERIFICATION_ENABLED} />
       </Card>
       <p className="mt-16 text-center text-ink-muted-dark" style={{ font: 'var(--font-body-small)' }}>
         {copy.toggleLabel}{' '}
