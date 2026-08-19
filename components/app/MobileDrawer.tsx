@@ -21,6 +21,7 @@ type MobileDrawerProps = {
   onAsk: () => void;
   onHelp: () => void;
   onLogout: () => void;
+  onDeleteAccount: () => void;
   user: MobileDrawerUser;
 };
 
@@ -30,7 +31,17 @@ type MobileDrawerProps = {
  * same NavItem list as the desktop rail, in the same order, so mobile and
  * desktop navigation never drift apart.
  */
-export function MobileDrawer({ isOpen, onClose, navItems, activePath, onAsk, onHelp, onLogout, user }: MobileDrawerProps) {
+export function MobileDrawer({
+  isOpen,
+  onClose,
+  navItems,
+  activePath,
+  onAsk,
+  onHelp,
+  onLogout,
+  onDeleteAccount,
+  user,
+}: MobileDrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const [dragX, setDragX] = useState(0);
   const dragStartX = useRef<number | null>(null);
@@ -288,6 +299,20 @@ export function MobileDrawer({ isOpen, onClose, navItems, activePath, onAsk, onH
               style={{ font: 'var(--font-body-regular)' }}
             >
               Log out
+            </button>
+          )}
+
+          {user && (
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onDeleteAccount();
+              }}
+              className="flex min-h-44 select-none items-center px-20 py-12 text-left text-danger transition hover:bg-danger-light active:bg-danger-light"
+              style={{ font: 'var(--font-body-regular)' }}
+            >
+              Delete account
             </button>
           )}
         </nav>

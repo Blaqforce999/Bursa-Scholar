@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
-import { getSession } from '@/lib/auth';
+import { getSession, destroySession } from '@/lib/auth';
 import { logger } from '@/lib/logger';
 import type { ActionResult } from '@/lib/types';
 
@@ -42,5 +42,28 @@ export async function updateProfile(raw: unknown): Promise<ActionResult<null>> {
   logger.info('profile.updated', { userId: session.id });
   revalidatePath('/profile');
   revalidatePath('/dashboard');
+  return { ok: true, data: null };
+}
+
+/**
+ * Permanently deletes the signed-in user's account. Cascades to their
+ * sessions and saved scholarships (Prisma onDelete: Cascade on both
+ * relations), then clears the current session cookie. Irreversible by
+ * design, this is the confirmed action behind the delete-account dialog,
+ * not something reachable without that confirmation step.
+ */
+export async function deleteAccount(): Promise<ActionResult<null>> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: { code: 'UNAUTHENTICATED', message: 'Sign in required.' } };
+
+  try {
+    await db.user.delete({ where: { id: session.id } });
+  } catch (err) {
+    logger.error('account.delete.failed', { userId: session.id, error: err });
+    return { ok: false, error: { code: 'SERVER_ERROR', message: 'Could not delete your account. Please try again.' } };
+  }
+
+  await destroySession();
+  logger.info('account.deleted', { userId: session.id });
   return { ok: true, data: null };
 }

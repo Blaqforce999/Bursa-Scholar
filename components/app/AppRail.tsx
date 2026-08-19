@@ -8,6 +8,7 @@ import { LogoMark } from '@/components/shared/LogoMark';
 import { useAssistant } from '@/components/app/AssistantProvider';
 import { HelpModal } from '@/components/app/HelpModal';
 import { MobileDrawer } from '@/components/app/MobileDrawer';
+import { DeleteAccountModal } from '@/components/app/DeleteAccountModal';
 import { HomeIcon, DiscoverIcon, SparkIcon, SavedIcon, CompareIcon, HelpIcon, UserIcon, MenuIcon } from '@/components/shared/icons';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -42,6 +43,7 @@ export function AppRail({ user }: { user: AppRailUser }) {
   const { open: openAssistant } = useAssistant();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   // An anonymous visitor can still browse Discover/Compare (Bursa's
   // "discovery first" principle) but Home/Ask/Saved all assume a session.
@@ -85,7 +87,7 @@ export function AppRail({ user }: { user: AppRailUser }) {
           >
             <HelpIcon className="h-20 w-20" />
           </button>
-          {user ? <AvatarMenu user={user} /> : <AccountEntry />}
+          {user ? <AvatarMenu user={user} onDeleteAccount={() => setIsDeleteAccountOpen(true)} /> : <AccountEntry />}
         </div>
       </nav>
 
@@ -112,10 +114,12 @@ export function AppRail({ user }: { user: AppRailUser }) {
         onAsk={openAssistant}
         onHelp={() => setIsHelpOpen(true)}
         onLogout={handleLogout}
+        onDeleteAccount={() => setIsDeleteAccountOpen(true)}
         user={user}
       />
 
       <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
+      <DeleteAccountModal isOpen={isDeleteAccountOpen} onClose={() => setIsDeleteAccountOpen(false)} />
     </>
   );
 }
@@ -168,7 +172,7 @@ function RailItem({ item, active, onAsk }: { item: NavItem; active: boolean; onA
   );
 }
 
-function AvatarMenu({ user }: { user: { name: string | null } }) {
+function AvatarMenu({ user, onDeleteAccount }: { user: { name: string | null }; onDeleteAccount: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const initials =
@@ -223,6 +227,19 @@ function AvatarMenu({ user }: { user: { name: string | null } }) {
               style={{ font: 'var(--font-body-small)' }}
             >
               Log out
+            </button>
+            <div className="my-4 border-t border-border-faint" />
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                setIsOpen(false);
+                onDeleteAccount();
+              }}
+              className="rounded-lg px-12 py-8 text-left text-danger transition hover:bg-danger-light"
+              style={{ font: 'var(--font-body-small)' }}
+            >
+              Delete account
             </button>
           </div>
         </>
