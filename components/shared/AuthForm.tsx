@@ -203,7 +203,7 @@ export function AuthForm({ mode, next }: AuthFormProps) {
         disabled={isSubmitting}
         aria-busy={isSubmitting}
       >
-        {isSubmitting ? (mode === 'signup' ? 'Creating account…' : 'Signing in…') : mode === 'signup' ? 'Create account' : 'Log in'}
+        {isSubmitting ? (mode === 'signup' ? 'Creating account…' : 'Logging in…') : mode === 'signup' ? 'Create account' : 'Log in'}
       </Button>
 
       <div className="mt-24 flex items-center gap-16" role="separator" aria-hidden="true">

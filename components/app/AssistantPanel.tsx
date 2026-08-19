@@ -41,13 +41,34 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
   const [isNearBottom, setIsNearBottom] = useState(true);
   const [dragY, setDragY] = useState(0);
   const [areChipsExpanded, setAreChipsExpanded] = useState(false);
+  const [composerHeight, setComposerHeight] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const stickToBottomRef = useRef(true);
   const nextId = useRef(0);
   const dragStartY = useRef<number | null>(null);
   const isDragging = useRef(false);
 
   const DISMISS_THRESHOLD_PX = 96;
+  const SCROLL_BOTTOM_BUFFER_PX = 16;
+
+  // The composer's height isn't fixed (a "Suggestions" toggle and its chip
+  // row can appear/expand), so it's measured live rather than guessed, and
+  // used to keep the last message fully clear of it. The composer already
+  // carries its own env(safe-area-inset-bottom) padding, so this measured
+  // height already accounts for the safe area without double-counting it.
+  useEffect(() => {
+    const el = formRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      // offsetHeight (border-box) rather than contentRect (content-box only)
+      // so the form's own padding — including its safe-area inset — is
+      // actually included in the measurement.
+      setComposerHeight(el.offsetHeight);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Drag-to-dismiss is bound only to the mobile-only handle bar below (not
   // the whole sheet), so it never fights the scrollable message list for
@@ -92,9 +113,13 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
 
   function afterMessagesChange() {
     if (stickToBottomRef.current) {
-      // Wait a frame so the new message has actually laid out before we
-      // measure scrollHeight, or the scroll lands short.
-      requestAnimationFrame(() => scrollToBottom());
+      // A single frame isn't always enough — the new message (or the
+      // typing indicator) needs to actually finish laying out, and a
+      // second frame guarantees that's settled before we measure
+      // scrollHeight, or the scroll can land short of the true bottom.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToBottom());
+      });
     }
   }
 
@@ -227,7 +252,12 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
         </header>
 
         <div className="relative flex flex-1 flex-col overflow-hidden">
-          <div ref={scrollRef} onScroll={handleScroll} className="flex flex-1 flex-col gap-16 overflow-y-auto px-16 py-16">
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex flex-1 flex-col gap-16 overflow-y-auto px-16 pt-16"
+            style={{ paddingBottom: composerHeight + SCROLL_BOTTOM_BUFFER_PX }}
+          >
             <p className="select-none text-ink-muted-dark" style={{ font: 'var(--font-body-regular)' }}>
               Hi{firstName ? ` ${firstName}` : ''} 👋 Ask me to find, explain, or compare scholarships. I only surface
               real matches from Bursa.
@@ -253,6 +283,7 @@ export function AssistantPanel({ isOpen, onClose, firstName }: AssistantPanelPro
         </div>
 
         <form
+          ref={formRef}
           onSubmit={(event) => {
             event.preventDefault();
             handleSend(input);
